@@ -1,4 +1,4 @@
-module go-micro-proto
+module go-micro-protoc
 
 go 1.16
 
