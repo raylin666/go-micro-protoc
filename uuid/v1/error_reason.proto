@@ -3,7 +3,7 @@ syntax = "proto3";
 package uuid.v1;
 import "errors/errors.proto";
 
-option go_package = "go-micro-proto/uuid/v1;v1";
+option go_package = "go-micro-protoc/uuid/v1;v1";
 option java_multiple_files = true;
 option java_package = "uuid.v1";
 option java_outer_classname = "UuidErrors";
