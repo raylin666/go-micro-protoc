@@ -20,5 +20,5 @@ message GenerateShortLinkRequest {
 }
 
 message GenerateShortLinkReply {
-	string short_url = 1;
+	string url = 1;
 }
