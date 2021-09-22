@@ -23,15 +23,15 @@ service ShortLink {
 }
 
 message GenerateShortLinkRequest {
-	string short_url = 1;
+	string url = 1;
 }
 
 message GenerateShortLinkReply {
-
+	string url = 1;
 }
 
 message RedirectShortUrlRequest {
-
+	string short_url = 1;
 }
 
 message RedirectShortUrlReply {
