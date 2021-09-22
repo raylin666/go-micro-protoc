@@ -29,7 +29,7 @@ func RegisterShortLinkHTTPServer(s *http.Server, srv ShortLinkHTTPServer) {
 func _ShortLink_GenerateShortLink0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GenerateShortLinkRequest
-		if err := ctx.Bind(&in.Url); err != nil {
+		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, "/link.v1.ShortLink/GenerateShortLink")
@@ -63,7 +63,7 @@ func (c *ShortLinkHTTPClientImpl) GenerateShortLink(ctx context.Context, in *Gen
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/link.v1.ShortLink/GenerateShortLink"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "POST", path, in.Url, &out, opts...)
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
