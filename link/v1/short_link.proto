@@ -14,10 +14,11 @@ service ShortLink {
 			body: "*"
 		};
 	};
-	// 重定向短链接跳转实际地址
-	rpc RedirectShortUrl (RedirectShortUrlRequest) returns (RedirectShortUrlReply) {
+	// 短链接拉取长链接
+	rpc ShortUrlToLongUrl (ShortUrlToLongUrlRequest) returns (ShortUrlToLongUrlReply) {
 		option (google.api.http) = {
-			get: "/g/{short_url}"
+			post: "/link/generate.long"
+			body: "*"
 		};
 	};
 }
@@ -30,10 +31,10 @@ message GenerateShortLinkReply {
 	string url = 1;
 }
 
-message RedirectShortUrlRequest {
-	string short_url = 1;
+message ShortUrlToLongUrlRequest {
+	string url = 1;
 }
 
-message RedirectShortUrlReply {
-
+message ShortUrlToLongUrlReply {
+	string url = 1;
 }
