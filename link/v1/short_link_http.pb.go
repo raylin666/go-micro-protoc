@@ -23,7 +23,7 @@ type ShortLinkHTTPServer interface {
 
 func RegisterShortLinkHTTPServer(s *http.Server, srv ShortLinkHTTPServer) {
 	r := s.Route("/")
-	r.POST("/link/short/generate", _ShortLink_GenerateShortLink0_HTTP_Handler(srv))
+	r.POST("/link/generate.short", _ShortLink_GenerateShortLink0_HTTP_Handler(srv))
 }
 
 func _ShortLink_GenerateShortLink0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx http.Context) error {
@@ -59,7 +59,7 @@ func NewShortLinkHTTPClient(client *http.Client) ShortLinkHTTPClient {
 
 func (c *ShortLinkHTTPClientImpl) GenerateShortLink(ctx context.Context, in *GenerateShortLinkRequest, opts ...http.CallOption) (*GenerateShortLinkReply, error) {
 	var out GenerateShortLinkReply
-	pattern := "/link/short/generate"
+	pattern := "/link/generate.short"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/link.v1.ShortLink/GenerateShortLink"))
 	opts = append(opts, http.PathTemplate(pattern))
