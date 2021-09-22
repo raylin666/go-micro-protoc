@@ -19,11 +19,13 @@ const _ = http.SupportPackageIsVersion1
 
 type ShortLinkHTTPServer interface {
 	GenerateShortLink(context.Context, *GenerateShortLinkRequest) (*GenerateShortLinkReply, error)
+	RedirectShortUrl(context.Context, *RedirectShortUrlRequest) (*RedirectShortUrlReply, error)
 }
 
 func RegisterShortLinkHTTPServer(s *http.Server, srv ShortLinkHTTPServer) {
 	r := s.Route("/")
 	r.POST("/link/generate.short", _ShortLink_GenerateShortLink0_HTTP_Handler(srv))
+	r.GET("/g/{short_url}", _ShortLink_RedirectShortUrl0_HTTP_Handler(srv))
 }
 
 func _ShortLink_GenerateShortLink0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx http.Context) error {
@@ -45,8 +47,31 @@ func _ShortLink_GenerateShortLink0_HTTP_Handler(srv ShortLinkHTTPServer) func(ct
 	}
 }
 
+func _ShortLink_RedirectShortUrl0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in RedirectShortUrlRequest
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindVars(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, "/link.v1.ShortLink/RedirectShortUrl")
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.RedirectShortUrl(ctx, req.(*RedirectShortUrlRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*RedirectShortUrlReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type ShortLinkHTTPClient interface {
 	GenerateShortLink(ctx context.Context, req *GenerateShortLinkRequest, opts ...http.CallOption) (rsp *GenerateShortLinkReply, err error)
+	RedirectShortUrl(ctx context.Context, req *RedirectShortUrlRequest, opts ...http.CallOption) (rsp *RedirectShortUrlReply, err error)
 }
 
 type ShortLinkHTTPClientImpl struct {
@@ -64,6 +89,19 @@ func (c *ShortLinkHTTPClientImpl) GenerateShortLink(ctx context.Context, in *Gen
 	opts = append(opts, http.Operation("/link.v1.ShortLink/GenerateShortLink"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *ShortLinkHTTPClientImpl) RedirectShortUrl(ctx context.Context, in *RedirectShortUrlRequest, opts ...http.CallOption) (*RedirectShortUrlReply, error) {
+	var out RedirectShortUrlReply
+	pattern := "/g/{short_url}"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation("/link.v1.ShortLink/RedirectShortUrl"))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

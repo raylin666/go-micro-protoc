@@ -7,18 +7,33 @@ import "google/api/annotations.proto";
 option go_package = "go-micro-protoc/link/v1;v1";
 
 service ShortLink {
+	// 生成短链接
 	rpc GenerateShortLink (GenerateShortLinkRequest) returns (GenerateShortLinkReply) {
 		option (google.api.http) = {
 			post: "/link/generate.short"
 			body: "*"
 		};
 	};
+	// 重定向短链接跳转实际地址
+	rpc RedirectShortUrl (RedirectShortUrlRequest) returns (RedirectShortUrlReply) {
+		option (google.api.http) = {
+			get: "/g/{short_url}"
+		};
+	};
 }
 
 message GenerateShortLinkRequest {
-	string url = 1;
+	string short_url = 1;
 }
 
 message GenerateShortLinkReply {
-	string url = 1;
+
+}
+
+message RedirectShortUrlRequest {
+
+}
+
+message RedirectShortUrlReply {
+
 }
