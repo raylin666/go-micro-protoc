@@ -21,6 +21,7 @@ service ShortLink {
 message GenerateShortLinkRequest {
 	string url = 1;
 }
+
 message GenerateShortLinkReply {
 	string url = 1;
 }
