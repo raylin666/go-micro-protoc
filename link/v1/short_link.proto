@@ -13,7 +13,7 @@ service ShortLink {
 	rpc GenerateShortLink (GenerateShortLinkRequest) returns (GenerateShortLinkReply) {
 		option (google.api.http) = {
 			post: "/link/short/generate"
-			body: "url"
+			body: "*"
 		};
 	};
 }
