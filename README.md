@@ -11,4 +11,8 @@
 
   生成 proto 源码:  `kratos proto client link/v1`
 
+* 上传服务 (upload)
+
+  生成 proto 源码: `kratos proto client upload/v1`
+
 对应 github 仓库 -> git@github.com:raylin666/go-micro.git
