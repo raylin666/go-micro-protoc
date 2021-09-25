@@ -19,9 +19,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShortLinkClient interface {
 	// 生成短链接
-	GenerateShortLink(ctx context.Context, in *GenerateShortLinkRequest, opts ...grpc.CallOption) (*GenerateShortLinkReply, error)
+	GenerateShortUrl(ctx context.Context, in *GenerateShortUrlRequest, opts ...grpc.CallOption) (*GenerateShortUrlReply, error)
 	// 短链接拉取长链接
-	ShortUrlToLongUrl(ctx context.Context, in *ShortUrlToLongUrlRequest, opts ...grpc.CallOption) (*ShortUrlToLongUrlReply, error)
+	TransformLongUrl(ctx context.Context, in *TransformLongUrlRequest, opts ...grpc.CallOption) (*TransformLongUrlReply, error)
 }
 
 type shortLinkClient struct {
@@ -32,18 +32,18 @@ func NewShortLinkClient(cc grpc.ClientConnInterface) ShortLinkClient {
 	return &shortLinkClient{cc}
 }
 
-func (c *shortLinkClient) GenerateShortLink(ctx context.Context, in *GenerateShortLinkRequest, opts ...grpc.CallOption) (*GenerateShortLinkReply, error) {
-	out := new(GenerateShortLinkReply)
-	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/GenerateShortLink", in, out, opts...)
+func (c *shortLinkClient) GenerateShortUrl(ctx context.Context, in *GenerateShortUrlRequest, opts ...grpc.CallOption) (*GenerateShortUrlReply, error) {
+	out := new(GenerateShortUrlReply)
+	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/GenerateShortUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *shortLinkClient) ShortUrlToLongUrl(ctx context.Context, in *ShortUrlToLongUrlRequest, opts ...grpc.CallOption) (*ShortUrlToLongUrlReply, error) {
-	out := new(ShortUrlToLongUrlReply)
-	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/ShortUrlToLongUrl", in, out, opts...)
+func (c *shortLinkClient) TransformLongUrl(ctx context.Context, in *TransformLongUrlRequest, opts ...grpc.CallOption) (*TransformLongUrlReply, error) {
+	out := new(TransformLongUrlReply)
+	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/TransformLongUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,9 +55,9 @@ func (c *shortLinkClient) ShortUrlToLongUrl(ctx context.Context, in *ShortUrlToL
 // for forward compatibility
 type ShortLinkServer interface {
 	// 生成短链接
-	GenerateShortLink(context.Context, *GenerateShortLinkRequest) (*GenerateShortLinkReply, error)
+	GenerateShortUrl(context.Context, *GenerateShortUrlRequest) (*GenerateShortUrlReply, error)
 	// 短链接拉取长链接
-	ShortUrlToLongUrl(context.Context, *ShortUrlToLongUrlRequest) (*ShortUrlToLongUrlReply, error)
+	TransformLongUrl(context.Context, *TransformLongUrlRequest) (*TransformLongUrlReply, error)
 	mustEmbedUnimplementedShortLinkServer()
 }
 
@@ -65,11 +65,11 @@ type ShortLinkServer interface {
 type UnimplementedShortLinkServer struct {
 }
 
-func (UnimplementedShortLinkServer) GenerateShortLink(context.Context, *GenerateShortLinkRequest) (*GenerateShortLinkReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateShortLink not implemented")
+func (UnimplementedShortLinkServer) GenerateShortUrl(context.Context, *GenerateShortUrlRequest) (*GenerateShortUrlReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateShortUrl not implemented")
 }
-func (UnimplementedShortLinkServer) ShortUrlToLongUrl(context.Context, *ShortUrlToLongUrlRequest) (*ShortUrlToLongUrlReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShortUrlToLongUrl not implemented")
+func (UnimplementedShortLinkServer) TransformLongUrl(context.Context, *TransformLongUrlRequest) (*TransformLongUrlReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TransformLongUrl not implemented")
 }
 func (UnimplementedShortLinkServer) mustEmbedUnimplementedShortLinkServer() {}
 
@@ -84,38 +84,38 @@ func RegisterShortLinkServer(s grpc.ServiceRegistrar, srv ShortLinkServer) {
 	s.RegisterService(&ShortLink_ServiceDesc, srv)
 }
 
-func _ShortLink_GenerateShortLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateShortLinkRequest)
+func _ShortLink_GenerateShortUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateShortUrlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShortLinkServer).GenerateShortLink(ctx, in)
+		return srv.(ShortLinkServer).GenerateShortUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/link.v1.ShortLink/GenerateShortLink",
+		FullMethod: "/link.v1.ShortLink/GenerateShortUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShortLinkServer).GenerateShortLink(ctx, req.(*GenerateShortLinkRequest))
+		return srv.(ShortLinkServer).GenerateShortUrl(ctx, req.(*GenerateShortUrlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShortLink_ShortUrlToLongUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ShortUrlToLongUrlRequest)
+func _ShortLink_TransformLongUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TransformLongUrlRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShortLinkServer).ShortUrlToLongUrl(ctx, in)
+		return srv.(ShortLinkServer).TransformLongUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/link.v1.ShortLink/ShortUrlToLongUrl",
+		FullMethod: "/link.v1.ShortLink/TransformLongUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShortLinkServer).ShortUrlToLongUrl(ctx, req.(*ShortUrlToLongUrlRequest))
+		return srv.(ShortLinkServer).TransformLongUrl(ctx, req.(*TransformLongUrlRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -128,12 +128,12 @@ var ShortLink_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ShortLinkServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GenerateShortLink",
-			Handler:    _ShortLink_GenerateShortLink_Handler,
+			MethodName: "GenerateShortUrl",
+			Handler:    _ShortLink_GenerateShortUrl_Handler,
 		},
 		{
-			MethodName: "ShortUrlToLongUrl",
-			Handler:    _ShortLink_ShortUrlToLongUrl_Handler,
+			MethodName: "TransformLongUrl",
+			Handler:    _ShortLink_TransformLongUrl_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

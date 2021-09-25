@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UuidClient interface {
-	GenerateUuid(ctx context.Context, in *GenerateUuidRequest, opts ...grpc.CallOption) (*GenerateUuidReply, error)
+	Generate(ctx context.Context, in *GenerateRequest, opts ...grpc.CallOption) (*GenerateReply, error)
 }
 
 type uuidClient struct {
@@ -29,9 +29,9 @@ func NewUuidClient(cc grpc.ClientConnInterface) UuidClient {
 	return &uuidClient{cc}
 }
 
-func (c *uuidClient) GenerateUuid(ctx context.Context, in *GenerateUuidRequest, opts ...grpc.CallOption) (*GenerateUuidReply, error) {
-	out := new(GenerateUuidReply)
-	err := c.cc.Invoke(ctx, "/uuid.v1.Uuid/GenerateUuid", in, out, opts...)
+func (c *uuidClient) Generate(ctx context.Context, in *GenerateRequest, opts ...grpc.CallOption) (*GenerateReply, error) {
+	out := new(GenerateReply)
+	err := c.cc.Invoke(ctx, "/uuid.v1.Uuid/Generate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *uuidClient) GenerateUuid(ctx context.Context, in *GenerateUuidRequest, 
 // All implementations must embed UnimplementedUuidServer
 // for forward compatibility
 type UuidServer interface {
-	GenerateUuid(context.Context, *GenerateUuidRequest) (*GenerateUuidReply, error)
+	Generate(context.Context, *GenerateRequest) (*GenerateReply, error)
 	mustEmbedUnimplementedUuidServer()
 }
 
@@ -50,8 +50,8 @@ type UuidServer interface {
 type UnimplementedUuidServer struct {
 }
 
-func (UnimplementedUuidServer) GenerateUuid(context.Context, *GenerateUuidRequest) (*GenerateUuidReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateUuid not implemented")
+func (UnimplementedUuidServer) Generate(context.Context, *GenerateRequest) (*GenerateReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Generate not implemented")
 }
 func (UnimplementedUuidServer) mustEmbedUnimplementedUuidServer() {}
 
@@ -66,20 +66,20 @@ func RegisterUuidServer(s grpc.ServiceRegistrar, srv UuidServer) {
 	s.RegisterService(&Uuid_ServiceDesc, srv)
 }
 
-func _Uuid_GenerateUuid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateUuidRequest)
+func _Uuid_Generate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UuidServer).GenerateUuid(ctx, in)
+		return srv.(UuidServer).Generate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/uuid.v1.Uuid/GenerateUuid",
+		FullMethod: "/uuid.v1.Uuid/Generate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UuidServer).GenerateUuid(ctx, req.(*GenerateUuidRequest))
+		return srv.(UuidServer).Generate(ctx, req.(*GenerateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +92,8 @@ var Uuid_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UuidServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GenerateUuid",
-			Handler:    _Uuid_GenerateUuid_Handler,
+			MethodName: "Generate",
+			Handler:    _Uuid_Generate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

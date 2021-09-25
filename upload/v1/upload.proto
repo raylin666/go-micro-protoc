@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package upload.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/raylin666/go-micro-protoc/upload/v1;v1";
+
+service Upload {
+	// 数据流方式上传文件
+	rpc StreamUploadFile (StreamUploadFileRequest) returns (StreamUploadFileReply) {
+		option (google.api.http) = {
+			put: "/file/stream"
+			body: "*"
+		};
+	};
+}
+
+message StreamUploadFileRequest {
+	string stream = 1;
+	string mime_type = 2;
+}
+
+message StreamUploadFileReply {
+	string hash = 1;
+	string persistent_id = 2;
+	string key = 3;
+	string url = 4;
+}

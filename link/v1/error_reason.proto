@@ -4,7 +4,7 @@ package link.v1;
 
 import "errors/errors.proto";
 
-option go_package = "go-micro-protoc/link/v1;v1";
+option go_package = "github.com/raylin666/go-micro-protoc/link/v1;v1";
 
 enum ErrorReason {
 	// 设置缺省错误码

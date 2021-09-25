@@ -1,4 +1,4 @@
-module github.com/raylin666/go-micro-protoc
+module go-micro-protoc
 
 go 1.16
 

@@ -4,18 +4,18 @@ package uuid.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "go-micro-protoc/uuid/v1;v1";
+option go_package = "github.com/raylin666/go-micro-protoc/uuid/v1;v1";
 
 service Uuid {
-	rpc GenerateUuid (GenerateUuidRequest) returns (GenerateUuidReply) {
+	rpc Generate (GenerateRequest) returns (GenerateReply) {
 			option (google.api.http) = {
-				post: "/uuid/generate"
+				post: "/generate"
 				body: "*"
 			};
 	};
 }
 
-message GenerateUuidRequest {
+message GenerateRequest {
 	/**
 		default: 随机UUID
 		time_rand: 时间随机值
@@ -23,6 +23,6 @@ message GenerateUuidRequest {
 	string type = 1;
 }
 
-message GenerateUuidReply {
+message GenerateReply {
 	string value = 1;
 }

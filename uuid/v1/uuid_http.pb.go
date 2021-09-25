@@ -18,35 +18,35 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 type UuidHTTPServer interface {
-	GenerateUuid(context.Context, *GenerateUuidRequest) (*GenerateUuidReply, error)
+	Generate(context.Context, *GenerateRequest) (*GenerateReply, error)
 }
 
 func RegisterUuidHTTPServer(s *http.Server, srv UuidHTTPServer) {
 	r := s.Route("/")
-	r.POST("/uuid/generate", _Uuid_GenerateUuid0_HTTP_Handler(srv))
+	r.POST("/generate", _Uuid_Generate0_HTTP_Handler(srv))
 }
 
-func _Uuid_GenerateUuid0_HTTP_Handler(srv UuidHTTPServer) func(ctx http.Context) error {
+func _Uuid_Generate0_HTTP_Handler(srv UuidHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in GenerateUuidRequest
+		var in GenerateRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/uuid.v1.Uuid/GenerateUuid")
+		http.SetOperation(ctx, "/uuid.v1.Uuid/Generate")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GenerateUuid(ctx, req.(*GenerateUuidRequest))
+			return srv.Generate(ctx, req.(*GenerateRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*GenerateUuidReply)
+		reply := out.(*GenerateReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type UuidHTTPClient interface {
-	GenerateUuid(ctx context.Context, req *GenerateUuidRequest, opts ...http.CallOption) (rsp *GenerateUuidReply, err error)
+	Generate(ctx context.Context, req *GenerateRequest, opts ...http.CallOption) (rsp *GenerateReply, err error)
 }
 
 type UuidHTTPClientImpl struct {
@@ -57,11 +57,11 @@ func NewUuidHTTPClient(client *http.Client) UuidHTTPClient {
 	return &UuidHTTPClientImpl{client}
 }
 
-func (c *UuidHTTPClientImpl) GenerateUuid(ctx context.Context, in *GenerateUuidRequest, opts ...http.CallOption) (*GenerateUuidReply, error) {
-	var out GenerateUuidReply
-	pattern := "/uuid/generate"
+func (c *UuidHTTPClientImpl) Generate(ctx context.Context, in *GenerateRequest, opts ...http.CallOption) (*GenerateReply, error) {
+	var out GenerateReply
+	pattern := "/generate"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation("/uuid.v1.Uuid/GenerateUuid"))
+	opts = append(opts, http.Operation("/uuid.v1.Uuid/Generate"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

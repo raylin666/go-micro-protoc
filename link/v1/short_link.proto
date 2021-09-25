@@ -4,37 +4,37 @@ package link.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "go-micro-protoc/link/v1;v1";
+option go_package = "github.com/raylin666/go-micro-protoc/link/v1;v1";
 
 service ShortLink {
 	// 生成短链接
-	rpc GenerateShortLink (GenerateShortLinkRequest) returns (GenerateShortLinkReply) {
+	rpc GenerateShortUrl (GenerateShortUrlRequest) returns (GenerateShortUrlReply) {
 		option (google.api.http) = {
-			post: "/link/generate.short"
+			post: "/generate/short.url"
 			body: "*"
 		};
 	};
 	// 短链接拉取长链接
-	rpc ShortUrlToLongUrl (ShortUrlToLongUrlRequest) returns (ShortUrlToLongUrlReply) {
+	rpc TransformLongUrl (TransformLongUrlRequest) returns (TransformLongUrlReply) {
 		option (google.api.http) = {
-			post: "/link/generate.long"
+			post: "/transform/long.url"
 			body: "*"
 		};
 	};
 }
 
-message GenerateShortLinkRequest {
+message GenerateShortUrlRequest {
 	string url = 1;
 }
 
-message GenerateShortLinkReply {
+message GenerateShortUrlReply {
 	string url = 1;
 }
 
-message ShortUrlToLongUrlRequest {
+message TransformLongUrlRequest {
 	string url = 1;
 }
 
-message ShortUrlToLongUrlReply {
+message TransformLongUrlReply {
 	string url = 1;
 }
