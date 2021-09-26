@@ -11,20 +11,11 @@ import (
 // is compatible with the kratos package it is being compiled against.
 const _ = errors.SupportPackageIsVersion1
 
-func IsUserNotFound(err error) bool {
+func IsStreamEmpty(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_USER_NOT_FOUND.String() && e.Code == 404
+	return e.Reason == ErrorReason_STREAM_EMPTY.String() && e.Code == 422
 }
 
-func ErrorUserNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(404, ErrorReason_USER_NOT_FOUND.String(), fmt.Sprintf(format, args...))
-}
-
-func IsContentMissing(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_CONTENT_MISSING.String() && e.Code == 400
-}
-
-func ErrorContentMissing(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_CONTENT_MISSING.String(), fmt.Sprintf(format, args...))
+func ErrorStreamEmpty(format string, args ...interface{}) *errors.Error {
+	return errors.New(422, ErrorReason_STREAM_EMPTY.String(), fmt.Sprintf(format, args...))
 }

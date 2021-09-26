@@ -17,13 +17,19 @@ service Upload {
 }
 
 message StreamUploadFileRequest {
-	string stream = 1;
+	bytes  stream = 1;
 	string mime_type = 2;
 }
 
 message StreamUploadFileReply {
 	string hash = 1;
-	string persistent_id = 2;
+	string uuid = 2;
 	string key = 3;
-	string url = 4;
+	int64  fsize = 4;
+	string url = 5;
+	string name = 6;
+	string bucket = 7;
+	string mime_type = 8;
+	string ext = 9;
 }
+
