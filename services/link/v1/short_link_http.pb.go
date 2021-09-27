@@ -34,7 +34,7 @@ func _ShortLink_GenerateShortUrl0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/link.v1.ShortLink/GenerateShortUrl")
+		http.SetOperation(ctx, "/services.link.v1.ShortLink/GenerateShortUrl")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.GenerateShortUrl(ctx, req.(*GenerateShortUrlRequest))
 		})
@@ -53,7 +53,7 @@ func _ShortLink_TransformLongUrl0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/link.v1.ShortLink/TransformLongUrl")
+		http.SetOperation(ctx, "/services.link.v1.ShortLink/TransformLongUrl")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.TransformLongUrl(ctx, req.(*TransformLongUrlRequest))
 		})
@@ -83,7 +83,7 @@ func (c *ShortLinkHTTPClientImpl) GenerateShortUrl(ctx context.Context, in *Gene
 	var out GenerateShortUrlReply
 	pattern := "/generate/short.url"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation("/link.v1.ShortLink/GenerateShortUrl"))
+	opts = append(opts, http.Operation("/services.link.v1.ShortLink/GenerateShortUrl"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
@@ -96,7 +96,7 @@ func (c *ShortLinkHTTPClientImpl) TransformLongUrl(ctx context.Context, in *Tran
 	var out TransformLongUrlReply
 	pattern := "/transform/long.url"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation("/link.v1.ShortLink/TransformLongUrl"))
+	opts = append(opts, http.Operation("/services.link.v1.ShortLink/TransformLongUrl"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

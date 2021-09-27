@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package link.v1;
+package services.link.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/raylin666/go-micro-protoc/link/v1;v1";
+option go_package = "github.com/raylin666/go-micro-protoc/services/link/v1;v1";
 
 service ShortLink {
 	// 生成短链接

@@ -32,7 +32,7 @@ func _Upload_StreamUploadFile0_HTTP_Handler(srv UploadHTTPServer) func(ctx http.
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/upload.v1.Upload/StreamUploadFile")
+		http.SetOperation(ctx, "/services.upload.v1.Upload/StreamUploadFile")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.StreamUploadFile(ctx, req.(*StreamUploadFileRequest))
 		})
@@ -61,7 +61,7 @@ func (c *UploadHTTPClientImpl) StreamUploadFile(ctx context.Context, in *StreamU
 	var out StreamUploadFileReply
 	pattern := "/file/stream"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation("/upload.v1.Upload/StreamUploadFile"))
+	opts = append(opts, http.Operation("/services.upload.v1.Upload/StreamUploadFile"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
 	if err != nil {

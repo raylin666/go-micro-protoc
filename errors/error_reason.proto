@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package errors;
+
+import "errors/errors.proto";
+
+option go_package = "github.com/raylin666/go-micro-protoc/errors;errors";
+
+enum ErrorReason {
+	// 设置缺省错误码
+	option (errors.default_code) = 500;
+
+	// 数据验证错误
+	DATA_VALIDATE_ERROR = 0 [(errors.code) = 422];
+}

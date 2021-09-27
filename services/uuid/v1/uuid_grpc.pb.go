@@ -31,7 +31,7 @@ func NewUuidClient(cc grpc.ClientConnInterface) UuidClient {
 
 func (c *uuidClient) Generate(ctx context.Context, in *GenerateRequest, opts ...grpc.CallOption) (*GenerateReply, error) {
 	out := new(GenerateReply)
-	err := c.cc.Invoke(ctx, "/uuid.v1.Uuid/Generate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.uuid.v1.Uuid/Generate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func _Uuid_Generate_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/uuid.v1.Uuid/Generate",
+		FullMethod: "/services.uuid.v1.Uuid/Generate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UuidServer).Generate(ctx, req.(*GenerateRequest))
@@ -88,7 +88,7 @@ func _Uuid_Generate_Handler(srv interface{}, ctx context.Context, dec func(inter
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Uuid_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "uuid.v1.Uuid",
+	ServiceName: "services.uuid.v1.Uuid",
 	HandlerType: (*UuidServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -97,5 +97,5 @@ var Uuid_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "uuid/v1/uuid.proto",
+	Metadata: "services/uuid/v1/uuid.proto",
 }

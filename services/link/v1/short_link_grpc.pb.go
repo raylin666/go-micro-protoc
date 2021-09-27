@@ -34,7 +34,7 @@ func NewShortLinkClient(cc grpc.ClientConnInterface) ShortLinkClient {
 
 func (c *shortLinkClient) GenerateShortUrl(ctx context.Context, in *GenerateShortUrlRequest, opts ...grpc.CallOption) (*GenerateShortUrlReply, error) {
 	out := new(GenerateShortUrlReply)
-	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/GenerateShortUrl", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.link.v1.ShortLink/GenerateShortUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (c *shortLinkClient) GenerateShortUrl(ctx context.Context, in *GenerateShor
 
 func (c *shortLinkClient) TransformLongUrl(ctx context.Context, in *TransformLongUrlRequest, opts ...grpc.CallOption) (*TransformLongUrlReply, error) {
 	out := new(TransformLongUrlReply)
-	err := c.cc.Invoke(ctx, "/link.v1.ShortLink/TransformLongUrl", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.link.v1.ShortLink/TransformLongUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func _ShortLink_GenerateShortUrl_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/link.v1.ShortLink/GenerateShortUrl",
+		FullMethod: "/services.link.v1.ShortLink/GenerateShortUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShortLinkServer).GenerateShortUrl(ctx, req.(*GenerateShortUrlRequest))
@@ -112,7 +112,7 @@ func _ShortLink_TransformLongUrl_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/link.v1.ShortLink/TransformLongUrl",
+		FullMethod: "/services.link.v1.ShortLink/TransformLongUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShortLinkServer).TransformLongUrl(ctx, req.(*TransformLongUrlRequest))
@@ -124,7 +124,7 @@ func _ShortLink_TransformLongUrl_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ShortLink_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "link.v1.ShortLink",
+	ServiceName: "services.link.v1.ShortLink",
 	HandlerType: (*ShortLinkServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -137,5 +137,5 @@ var ShortLink_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "link/v1/short_link.proto",
+	Metadata: "services/link/v1/short_link.proto",
 }

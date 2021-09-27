@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package upload.v1;
+package services.upload.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/raylin666/go-micro-protoc/upload/v1;v1";
+option go_package = "github.com/raylin666/go-micro-protoc/services/upload/v1;v1";
 
 service Upload {
 	// 数据流方式上传文件

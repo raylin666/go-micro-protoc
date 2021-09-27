@@ -32,7 +32,7 @@ func _Uuid_Generate0_HTTP_Handler(srv UuidHTTPServer) func(ctx http.Context) err
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/uuid.v1.Uuid/Generate")
+		http.SetOperation(ctx, "/services.uuid.v1.Uuid/Generate")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Generate(ctx, req.(*GenerateRequest))
 		})
@@ -61,7 +61,7 @@ func (c *UuidHTTPClientImpl) Generate(ctx context.Context, in *GenerateRequest, 
 	var out GenerateReply
 	pattern := "/generate"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation("/uuid.v1.Uuid/Generate"))
+	opts = append(opts, http.Operation("/services.uuid.v1.Uuid/Generate"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

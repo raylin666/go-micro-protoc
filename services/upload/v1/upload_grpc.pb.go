@@ -32,7 +32,7 @@ func NewUploadClient(cc grpc.ClientConnInterface) UploadClient {
 
 func (c *uploadClient) StreamUploadFile(ctx context.Context, in *StreamUploadFileRequest, opts ...grpc.CallOption) (*StreamUploadFileReply, error) {
 	out := new(StreamUploadFileReply)
-	err := c.cc.Invoke(ctx, "/upload.v1.Upload/StreamUploadFile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/services.upload.v1.Upload/StreamUploadFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func _Upload_StreamUploadFile_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/upload.v1.Upload/StreamUploadFile",
+		FullMethod: "/services.upload.v1.Upload/StreamUploadFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UploadServer).StreamUploadFile(ctx, req.(*StreamUploadFileRequest))
@@ -90,7 +90,7 @@ func _Upload_StreamUploadFile_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Upload_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "upload.v1.Upload",
+	ServiceName: "services.upload.v1.Upload",
 	HandlerType: (*UploadServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -99,5 +99,5 @@ var Upload_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "upload/v1/upload.proto",
+	Metadata: "services/upload/v1/upload.proto",
 }
