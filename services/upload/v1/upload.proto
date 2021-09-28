@@ -3,6 +3,7 @@ syntax = "proto3";
 package services.upload.v1;
 
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/raylin666/go-micro-protoc/services/upload/v1;v1";
 
@@ -17,8 +18,8 @@ service Upload {
 }
 
 message StreamUploadFileRequest {
-	bytes  stream = 1;
-	string mime_type = 2;
+	bytes  stream = 1 [(validate.rules).bytes.min_len = 3];
+	string mime_type = 2 [(validate.rules).string.min_len = 3];
 }
 
 message StreamUploadFileReply {

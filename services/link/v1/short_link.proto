@@ -3,6 +3,7 @@ syntax = "proto3";
 package services.link.v1;
 
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/raylin666/go-micro-protoc/services/link/v1;v1";
 
@@ -24,7 +25,7 @@ service ShortLink {
 }
 
 message GenerateShortUrlRequest {
-	string url = 1;
+	string url = 1 [(validate.rules).string.uri = true];
 }
 
 message GenerateShortUrlReply {
@@ -32,7 +33,7 @@ message GenerateShortUrlReply {
 }
 
 message TransformLongUrlRequest {
-	string url = 1;
+	string url = 1 [(validate.rules).string.uri = true];
 }
 
 message TransformLongUrlReply {
