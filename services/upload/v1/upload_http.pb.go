@@ -19,11 +19,13 @@ const _ = http.SupportPackageIsVersion1
 
 type UploadHTTPServer interface {
 	StreamUploadFile(context.Context, *StreamUploadFileRequest) (*StreamUploadFileReply, error)
+	UrlUploadFile(context.Context, *UrlUploadFileRequest) (*UrlUploadFileReply, error)
 }
 
 func RegisterUploadHTTPServer(s *http.Server, srv UploadHTTPServer) {
 	r := s.Route("/")
 	r.PUT("/file/stream", _Upload_StreamUploadFile0_HTTP_Handler(srv))
+	r.POST("/file/url", _Upload_UrlUploadFile0_HTTP_Handler(srv))
 }
 
 func _Upload_StreamUploadFile0_HTTP_Handler(srv UploadHTTPServer) func(ctx http.Context) error {
@@ -45,8 +47,28 @@ func _Upload_StreamUploadFile0_HTTP_Handler(srv UploadHTTPServer) func(ctx http.
 	}
 }
 
+func _Upload_UrlUploadFile0_HTTP_Handler(srv UploadHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in UrlUploadFileRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, "/services.upload.v1.Upload/UrlUploadFile")
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.UrlUploadFile(ctx, req.(*UrlUploadFileRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*UrlUploadFileReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type UploadHTTPClient interface {
 	StreamUploadFile(ctx context.Context, req *StreamUploadFileRequest, opts ...http.CallOption) (rsp *StreamUploadFileReply, err error)
+	UrlUploadFile(ctx context.Context, req *UrlUploadFileRequest, opts ...http.CallOption) (rsp *UrlUploadFileReply, err error)
 }
 
 type UploadHTTPClientImpl struct {
@@ -64,6 +86,19 @@ func (c *UploadHTTPClientImpl) StreamUploadFile(ctx context.Context, in *StreamU
 	opts = append(opts, http.Operation("/services.upload.v1.Upload/StreamUploadFile"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *UploadHTTPClientImpl) UrlUploadFile(ctx context.Context, in *UrlUploadFileRequest, opts ...http.CallOption) (*UrlUploadFileReply, error) {
+	var out UrlUploadFileReply
+	pattern := "/file/url"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation("/services.upload.v1.Upload/UrlUploadFile"))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

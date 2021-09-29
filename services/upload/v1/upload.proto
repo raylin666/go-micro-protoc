@@ -8,29 +8,49 @@ import "validate/validate.proto";
 option go_package = "github.com/raylin666/go-micro-protoc/services/upload/v1;v1";
 
 service Upload {
-	// 数据流方式上传文件
-	rpc StreamUploadFile (StreamUploadFileRequest) returns (StreamUploadFileReply) {
-		option (google.api.http) = {
-			put: "/file/stream"
-			body: "*"
-		};
-	};
+  // 数据流方式上传文件
+  rpc StreamUploadFile (StreamUploadFileRequest) returns (StreamUploadFileReply) {
+    option (google.api.http) = {
+      put: "/file/stream"
+      body: "*"
+    };
+  };
+
+  // 通过URL资源地址方式上传文件
+  rpc UrlUploadFile (UrlUploadFileRequest) returns (UrlUploadFileReply) {
+    option (google.api.http) = {
+      post: "/file/url"
+      body: "*"
+    };
+  };
 }
 
 message StreamUploadFileRequest {
-	bytes  stream = 1 [(validate.rules).bytes.min_len = 3];
-	string mime_type = 2 [(validate.rules).string.min_len = 3];
+  bytes  stream = 1 [(validate.rules).bytes.min_len = 3];
+  string mime_type = 2 [(validate.rules).string.min_len = 3];
 }
 
 message StreamUploadFileReply {
-	string hash = 1;
-	string uuid = 2;
-	string key = 3;
-	int64  fsize = 4;
-	string url = 5;
-	string name = 6;
-	string bucket = 7;
-	string mime_type = 8;
-	string ext = 9;
+  string hash = 1;
+  string uuid = 2;
+  string key = 3;
+  int64  fsize = 4;
+  string url = 5;
+  string name = 6;
+  string bucket = 7;
+  string mime_type = 8;
+  string ext = 9;
+}
+
+message UrlUploadFileRequest {
+  string url = 1 [(validate.rules).string.uri = true];
+}
+
+message UrlUploadFileReply {
+  string hash = 1;
+  string key = 3;
+  int64  fsize = 4;
+  string url = 5;
+  string mime_type = 8;
 }
 

@@ -198,3 +198,160 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StreamUploadFileReplyValidationError{}
+
+// Validate checks the field values on UrlUploadFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UrlUploadFileRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		return UrlUploadFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+	} else if !uri.IsAbs() {
+		return UrlUploadFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+	}
+
+	return nil
+}
+
+// UrlUploadFileRequestValidationError is the validation error returned by
+// UrlUploadFileRequest.Validate if the designated constraints aren't met.
+type UrlUploadFileRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UrlUploadFileRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UrlUploadFileRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UrlUploadFileRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UrlUploadFileRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UrlUploadFileRequestValidationError) ErrorName() string {
+	return "UrlUploadFileRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UrlUploadFileRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUrlUploadFileRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UrlUploadFileRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UrlUploadFileRequestValidationError{}
+
+// Validate checks the field values on UrlUploadFileReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UrlUploadFileReply) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Hash
+
+	// no validation rules for Key
+
+	// no validation rules for Fsize
+
+	// no validation rules for Url
+
+	// no validation rules for MimeType
+
+	return nil
+}
+
+// UrlUploadFileReplyValidationError is the validation error returned by
+// UrlUploadFileReply.Validate if the designated constraints aren't met.
+type UrlUploadFileReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UrlUploadFileReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UrlUploadFileReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UrlUploadFileReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UrlUploadFileReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UrlUploadFileReplyValidationError) ErrorName() string {
+	return "UrlUploadFileReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UrlUploadFileReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUrlUploadFileReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UrlUploadFileReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UrlUploadFileReplyValidationError{}

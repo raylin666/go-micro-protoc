@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 type UploadClient interface {
 	// 数据流方式上传文件
 	StreamUploadFile(ctx context.Context, in *StreamUploadFileRequest, opts ...grpc.CallOption) (*StreamUploadFileReply, error)
+	// 通过URL资源地址方式上传文件
+	UrlUploadFile(ctx context.Context, in *UrlUploadFileRequest, opts ...grpc.CallOption) (*UrlUploadFileReply, error)
 }
 
 type uploadClient struct {
@@ -39,12 +41,23 @@ func (c *uploadClient) StreamUploadFile(ctx context.Context, in *StreamUploadFil
 	return out, nil
 }
 
+func (c *uploadClient) UrlUploadFile(ctx context.Context, in *UrlUploadFileRequest, opts ...grpc.CallOption) (*UrlUploadFileReply, error) {
+	out := new(UrlUploadFileReply)
+	err := c.cc.Invoke(ctx, "/services.upload.v1.Upload/UrlUploadFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UploadServer is the server API for Upload service.
 // All implementations must embed UnimplementedUploadServer
 // for forward compatibility
 type UploadServer interface {
 	// 数据流方式上传文件
 	StreamUploadFile(context.Context, *StreamUploadFileRequest) (*StreamUploadFileReply, error)
+	// 通过URL资源地址方式上传文件
+	UrlUploadFile(context.Context, *UrlUploadFileRequest) (*UrlUploadFileReply, error)
 	mustEmbedUnimplementedUploadServer()
 }
 
@@ -54,6 +67,9 @@ type UnimplementedUploadServer struct {
 
 func (UnimplementedUploadServer) StreamUploadFile(context.Context, *StreamUploadFileRequest) (*StreamUploadFileReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StreamUploadFile not implemented")
+}
+func (UnimplementedUploadServer) UrlUploadFile(context.Context, *UrlUploadFileRequest) (*UrlUploadFileReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UrlUploadFile not implemented")
 }
 func (UnimplementedUploadServer) mustEmbedUnimplementedUploadServer() {}
 
@@ -86,6 +102,24 @@ func _Upload_StreamUploadFile_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Upload_UrlUploadFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UrlUploadFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UploadServer).UrlUploadFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/services.upload.v1.Upload/UrlUploadFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UploadServer).UrlUploadFile(ctx, req.(*UrlUploadFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Upload_ServiceDesc is the grpc.ServiceDesc for Upload service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -96,6 +130,10 @@ var Upload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StreamUploadFile",
 			Handler:    _Upload_StreamUploadFile_Handler,
+		},
+		{
+			MethodName: "UrlUploadFile",
+			Handler:    _Upload_UrlUploadFile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
