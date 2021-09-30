@@ -15,4 +15,8 @@
 
   生成 proto 源码: `kratos proto client upload/v1`
 
+* 鉴权服务 (auth)
+
+  生成 proto 源码: `kratos proto client auth/v1`
+
 对应 github 仓库 -> git@github.com:raylin666/go-micro.git

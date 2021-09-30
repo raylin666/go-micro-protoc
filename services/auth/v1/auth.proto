@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package services.auth.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/raylin666/go-micro-protoc/services/auth/v1;v1";
+
+service Auth {
+  // 获取用户具有的角色
+  rpc GetRolesForUser (GetRolesForUserRequest) returns (GetRolesForUserReply) {
+    option (google.api.http) = {
+      get: "/roles/forUser/{user}"
+    };
+  };
+}
+
+message GetRolesForUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+}
+
+message GetRolesForUserReply {
+  repeated string roles = 1;
+}
