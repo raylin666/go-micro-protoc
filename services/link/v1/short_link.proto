@@ -11,14 +11,14 @@ service ShortLink {
 	// 生成短链接
 	rpc GenerateShortUrl (GenerateShortUrlRequest) returns (GenerateShortUrlReply) {
 		option (google.api.http) = {
-			post: "/generate/short.url"
+			post: "/generate/short_url"
 			body: "*"
 		};
 	};
 	// 短链接拉取长链接
 	rpc TransformLongUrl (TransformLongUrlRequest) returns (TransformLongUrlReply) {
 		option (google.api.http) = {
-			post: "/transform/long.url"
+			post: "/transform/long_url"
 			body: "*"
 		};
 	};

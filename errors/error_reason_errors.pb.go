@@ -19,3 +19,12 @@ func IsDataValidateError(err error) bool {
 func ErrorDataValidateError(format string, args ...interface{}) *errors.Error {
 	return errors.New(422, ErrorReason_DATA_VALIDATE_ERROR.String(), fmt.Sprintf(format, args...))
 }
+
+func IsResourceDeleteError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_RESOURCE_DELETE_ERROR.String() && e.Code == 400
+}
+
+func ErrorResourceDeleteError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_RESOURCE_DELETE_ERROR.String(), fmt.Sprintf(format, args...))
+}

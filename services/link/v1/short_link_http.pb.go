@@ -24,8 +24,8 @@ type ShortLinkHTTPServer interface {
 
 func RegisterShortLinkHTTPServer(s *http.Server, srv ShortLinkHTTPServer) {
 	r := s.Route("/")
-	r.POST("/generate/short.url", _ShortLink_GenerateShortUrl0_HTTP_Handler(srv))
-	r.POST("/transform/long.url", _ShortLink_TransformLongUrl0_HTTP_Handler(srv))
+	r.POST("/generate/short_url", _ShortLink_GenerateShortUrl0_HTTP_Handler(srv))
+	r.POST("/transform/long_url", _ShortLink_TransformLongUrl0_HTTP_Handler(srv))
 }
 
 func _ShortLink_GenerateShortUrl0_HTTP_Handler(srv ShortLinkHTTPServer) func(ctx http.Context) error {
@@ -81,7 +81,7 @@ func NewShortLinkHTTPClient(client *http.Client) ShortLinkHTTPClient {
 
 func (c *ShortLinkHTTPClientImpl) GenerateShortUrl(ctx context.Context, in *GenerateShortUrlRequest, opts ...http.CallOption) (*GenerateShortUrlReply, error) {
 	var out GenerateShortUrlReply
-	pattern := "/generate/short.url"
+	pattern := "/generate/short_url"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/services.link.v1.ShortLink/GenerateShortUrl"))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -94,7 +94,7 @@ func (c *ShortLinkHTTPClientImpl) GenerateShortUrl(ctx context.Context, in *Gene
 
 func (c *ShortLinkHTTPClientImpl) TransformLongUrl(ctx context.Context, in *TransformLongUrlRequest, opts ...http.CallOption) (*TransformLongUrlReply, error) {
 	var out TransformLongUrlReply
-	pattern := "/transform/long.url"
+	pattern := "/transform/long_url"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation("/services.link.v1.ShortLink/TransformLongUrl"))
 	opts = append(opts, http.PathTemplate(pattern))

@@ -12,4 +12,7 @@ enum ErrorReason {
 
 	// 数据验证错误
 	DATA_VALIDATE_ERROR = 0 [(errors.code) = 422];
+
+	// 资源删除失败
+	RESOURCE_DELETE_ERROR = 1 [(errors.code) = 400];
 }

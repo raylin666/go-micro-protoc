@@ -173,3 +173,747 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetRolesForUserReplyValidationError{}
+
+// Validate checks the field values on AddRoleForUserRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AddRoleForUserRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return AddRoleForUserRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return AddRoleForUserRequestValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// AddRoleForUserRequestValidationError is the validation error returned by
+// AddRoleForUserRequest.Validate if the designated constraints aren't met.
+type AddRoleForUserRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddRoleForUserRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddRoleForUserRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddRoleForUserRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddRoleForUserRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddRoleForUserRequestValidationError) ErrorName() string {
+	return "AddRoleForUserRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddRoleForUserRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddRoleForUserRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddRoleForUserRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddRoleForUserRequestValidationError{}
+
+// Validate checks the field values on AddRoleForUserReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *AddRoleForUserReply) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for IsOk
+
+	return nil
+}
+
+// AddRoleForUserReplyValidationError is the validation error returned by
+// AddRoleForUserReply.Validate if the designated constraints aren't met.
+type AddRoleForUserReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddRoleForUserReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddRoleForUserReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddRoleForUserReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddRoleForUserReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddRoleForUserReplyValidationError) ErrorName() string {
+	return "AddRoleForUserReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddRoleForUserReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddRoleForUserReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddRoleForUserReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddRoleForUserReplyValidationError{}
+
+// Validate checks the field values on GetUsersForRoleRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetUsersForRoleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return GetUsersForRoleRequestValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// GetUsersForRoleRequestValidationError is the validation error returned by
+// GetUsersForRoleRequest.Validate if the designated constraints aren't met.
+type GetUsersForRoleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUsersForRoleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUsersForRoleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUsersForRoleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUsersForRoleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUsersForRoleRequestValidationError) ErrorName() string {
+	return "GetUsersForRoleRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUsersForRoleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUsersForRoleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUsersForRoleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUsersForRoleRequestValidationError{}
+
+// Validate checks the field values on GetUsersForRoleReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *GetUsersForRoleReply) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// GetUsersForRoleReplyValidationError is the validation error returned by
+// GetUsersForRoleReply.Validate if the designated constraints aren't met.
+type GetUsersForRoleReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUsersForRoleReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUsersForRoleReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUsersForRoleReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUsersForRoleReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUsersForRoleReplyValidationError) ErrorName() string {
+	return "GetUsersForRoleReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUsersForRoleReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUsersForRoleReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUsersForRoleReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUsersForRoleReplyValidationError{}
+
+// Validate checks the field values on HasRoleForUserRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *HasRoleForUserRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return HasRoleForUserRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return HasRoleForUserRequestValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// HasRoleForUserRequestValidationError is the validation error returned by
+// HasRoleForUserRequest.Validate if the designated constraints aren't met.
+type HasRoleForUserRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HasRoleForUserRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HasRoleForUserRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HasRoleForUserRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HasRoleForUserRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HasRoleForUserRequestValidationError) ErrorName() string {
+	return "HasRoleForUserRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e HasRoleForUserRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHasRoleForUserRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HasRoleForUserRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HasRoleForUserRequestValidationError{}
+
+// Validate checks the field values on HasRoleForUserReply with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *HasRoleForUserReply) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Has
+
+	return nil
+}
+
+// HasRoleForUserReplyValidationError is the validation error returned by
+// HasRoleForUserReply.Validate if the designated constraints aren't met.
+type HasRoleForUserReplyValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HasRoleForUserReplyValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HasRoleForUserReplyValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HasRoleForUserReplyValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HasRoleForUserReplyValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HasRoleForUserReplyValidationError) ErrorName() string {
+	return "HasRoleForUserReplyValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e HasRoleForUserReplyValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHasRoleForUserReply.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HasRoleForUserReplyValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HasRoleForUserReplyValidationError{}
+
+// Validate checks the field values on DeleteRoleForUserRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DeleteRoleForUserRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return DeleteRoleForUserRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return DeleteRoleForUserRequestValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// DeleteRoleForUserRequestValidationError is the validation error returned by
+// DeleteRoleForUserRequest.Validate if the designated constraints aren't met.
+type DeleteRoleForUserRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRoleForUserRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRoleForUserRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRoleForUserRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRoleForUserRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRoleForUserRequestValidationError) ErrorName() string {
+	return "DeleteRoleForUserRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRoleForUserRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRoleForUserRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRoleForUserRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRoleForUserRequestValidationError{}
+
+// Validate checks the field values on DeleteRolesForUserRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DeleteRolesForUserRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return DeleteRolesForUserRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// DeleteRolesForUserRequestValidationError is the validation error returned by
+// DeleteRolesForUserRequest.Validate if the designated constraints aren't met.
+type DeleteRolesForUserRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRolesForUserRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRolesForUserRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRolesForUserRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRolesForUserRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRolesForUserRequestValidationError) ErrorName() string {
+	return "DeleteRolesForUserRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRolesForUserRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRolesForUserRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRolesForUserRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRolesForUserRequestValidationError{}
+
+// Validate checks the field values on DeleteUserRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DeleteUserRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetUser()) < 1 {
+		return DeleteUserRequestValidationError{
+			field:  "User",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// DeleteUserRequestValidationError is the validation error returned by
+// DeleteUserRequest.Validate if the designated constraints aren't met.
+type DeleteUserRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteUserRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteUserRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteUserRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteUserRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteUserRequestValidationError) ErrorName() string {
+	return "DeleteUserRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteUserRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteUserRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteUserRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteUserRequestValidationError{}
+
+// Validate checks the field values on DeleteRoleRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DeleteRoleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetRole()) < 1 {
+		return DeleteRoleRequestValidationError{
+			field:  "Role",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	return nil
+}
+
+// DeleteRoleRequestValidationError is the validation error returned by
+// DeleteRoleRequest.Validate if the designated constraints aren't met.
+type DeleteRoleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRoleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRoleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRoleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRoleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRoleRequestValidationError) ErrorName() string {
+	return "DeleteRoleRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRoleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRoleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRoleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRoleRequestValidationError{}

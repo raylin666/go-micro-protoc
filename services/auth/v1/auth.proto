@@ -4,6 +4,7 @@ package services.auth.v1;
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
+import "google/protobuf/Empty.proto";
 
 option go_package = "github.com/raylin666/go-micro-protoc/services/auth/v1;v1";
 
@@ -11,7 +12,57 @@ service Auth {
   // 获取用户具有的角色
   rpc GetRolesForUser (GetRolesForUserRequest) returns (GetRolesForUserReply) {
     option (google.api.http) = {
-      get: "/roles/forUser/{user}"
+      get: "/user/{user}/roles"
+    };
+  };
+
+  // 用户添加角色
+  rpc AddRoleForUser (AddRoleForUserRequest) returns (AddRoleForUserReply) {
+    option (google.api.http) = {
+      post: "/user/add_role/{user}"
+      body: "*"
+    };
+  };
+
+  // 获取具有角色的用户
+  rpc GetUsersForRole (GetUsersForRoleRequest) returns (GetUsersForRoleReply) {
+    option (google.api.http) = {
+      get: "/role/{role}/users"
+    };
+  };
+
+  // 确定用户是否具有角色
+  rpc HasRoleForUser (HasRoleForUserRequest) returns (HasRoleForUserReply) {
+    option (google.api.http) = {
+      get: "/user/has_role/{user}?role={role}"
+    };
+  };
+
+  // 删除用户的角色
+  rpc DeleteRoleForUser (DeleteRoleForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/user/delete_role/{user}/{role}"
+    };
+  };
+
+  // 删除用户的所有角色
+  rpc DeleteRolesForUser (DeleteRolesForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/user/delete_roles/{user}"
+    };
+  };
+
+  // 删除用户
+  rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/user/delete/{user}"
+    };
+  };
+
+  // 删除角色
+  rpc DeleteRole (DeleteRoleRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/role/delete/{role}"
     };
   };
 }
@@ -22,4 +73,47 @@ message GetRolesForUserRequest {
 
 message GetRolesForUserReply {
   repeated string roles = 1;
+}
+
+message AddRoleForUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+
+message AddRoleForUserReply {
+  bool is_ok = 1;
+}
+
+message GetUsersForRoleRequest {
+  string role = 1 [(validate.rules).string.min_len = 1];
+}
+
+message GetUsersForRoleReply {
+  repeated string users = 1;
+}
+
+message HasRoleForUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+
+message HasRoleForUserReply {
+  bool has = 1;
+}
+
+message DeleteRoleForUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+
+message DeleteRolesForUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+}
+
+message DeleteUserRequest {
+  string user = 1 [(validate.rules).string.min_len = 1];
+}
+
+message DeleteRoleRequest {
+  string role = 1 [(validate.rules).string.min_len = 1];
 }
