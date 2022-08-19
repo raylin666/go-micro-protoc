@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package article.v1;
+
+import "errors/errors.proto";
+
+option go_package = "api/article/v1;v1";
+
+// kratos proto client api/article/v1/error_reason.proto
+
+enum ErrorReason {
+  // 设置缺省错误码
+  option (errors.default_code) = 500;
+
+  // 服务异常
+  SERVER_ERROR = 0;
+
+  // 数据校验失败
+  DATA_VALIDATE_ERROR = 100001 [(errors.code) = 422];
+  // 数据查询失败
+  DATA_SELECT_ERROR = 100002 [(errors.code) = 400];
+  // 数据已存在
+  DATA_ALREADY_EXISTS = 100003 [(errors.code) = 400];
+  // 数据不存在
+  DATA_NOT_FOUND = 100004 [(errors.code) = 400];
+  // 请先登录后再操作
+  NOT_LOGIN_ERROR = 100005 [(errors.code) = 401];
+}

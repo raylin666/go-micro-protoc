@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "api/user/v1;v1";
+
+// kratos proto client api/user/v1/account.proto
+
+// 用户服务
+service Account {
+  // 账号登录
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/account/login",
+      body: "*"
+    };
+  }
+  // 账号登出
+  rpc Logout (google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/account/logout",
+      body: "*"
+    };
+  }
+
+  // 获取账号信息
+  rpc GetInfo (google.protobuf.Empty) returns (GetInfoResponse) {
+    option (google.api.http) = {
+      get: "/account/info"
+    };
+  }
+
+  // 获取账号菜单列表
+  rpc GetMenuList (google.protobuf.Empty) returns (GetMenuListResponse) {
+    option (google.api.http) = {
+      get: "/account/menu_list"
+    };
+  }
+}
+
+message LoginRequest {
+  string username = 1 [(validate.rules).string = {min_len: 1, max_len: 20}];
+  string password = 2 [(validate.rules).string = {min_len: 1, max_len: 36}];
+}
+
+message LoginResponse {
+  string id = 1;
+  string token = 2;
+  string expire_at = 3;
+}
+
+message GetInfoResponse {
+  string id = 1;
+  string username = 2;
+  string real_username = 3;
+  int32 sex = 4;
+  string birthday_at = 5;
+  string avatar = 6;
+  string phone_area = 7;
+  string phone = 8;
+  string email = 9;
+  string last_login_ip = 10;
+  int32 status = 11;
+  string first_login_at = 12;
+  string last_login_at = 13;
+  string created_at = 14;
+  string updated_at = 15;
+  Role role = 16;
+}
+
+message Role {
+  string id = 1;
+  string name = 2;
+  string desc = 3;
+  repeated Permission permissions = 4;
+}
+
+message Permission {
+  string id = 1;
+  string name = 2;
+  string title = 3;
+  repeated Permission permissions = 5;
+}
+
+message GetMenuListResponse {
+  repeated MenuList list = 1;
+}
+
+message MenuList {
+  string id = 1;
+  string name = 2;
+  string title = 3;
+  string path = 4;
+  string component = 5;
+  string meta = 6;
+  string redirect = 7;
+  string pid = 8;
+}

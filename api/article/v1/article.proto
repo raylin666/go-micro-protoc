@@ -1,0 +1,171 @@
+syntax = "proto3";
+
+package article.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "api/article/v1;v1";
+
+// kratos proto client api/article/v1/article.proto
+
+// 文章服务
+service Article {
+  // 文章分类列表
+  rpc CategoryList (google.protobuf.Empty) returns (CategoryListResponse) {
+    option (google.api.http) = {
+      get: "/article/category/list"
+    };
+  }
+
+  // 文章列表
+  rpc List (ListRequest) returns (ListResponse) {
+    option (google.api.http) = {
+      get: "/article/list"
+    };
+  }
+
+  // 文章详情
+  rpc Info (InfoRequest) returns (InfoResponse) {
+    option (google.api.http) = {
+      get: "/article/info/{id}"
+    };
+  }
+
+  // 新增文章
+  rpc Add (AddRequest) returns (AddResponse) {
+    option (google.api.http) = {
+      post: "/article/add",
+      body: "*"
+    };
+  }
+
+  // 更新文章
+  rpc Update (UpdateRequest) returns (UpdateResponse) {
+    option (google.api.http) = {
+      post: "/article/update/{id}",
+      body: "*"
+    };
+  }
+
+  // 删除文章
+  rpc Delete (DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/article/delete/{id}"
+    };
+  }
+}
+
+message ListRequest {
+  int32 page = 1 [(validate.rules).int32 = {gt: 0}];
+  int32 size = 2 [(validate.rules).int32 = {gt: 0, lte: 100}];
+}
+
+message ListResponse {
+  repeated ArticleList list = 1;
+  int32 count = 2;
+  int32 page = 3;
+  int32 size = 4;
+}
+
+message ArticleList {
+  string id = 1;
+  string title = 2;
+  string author  = 3;
+  string summary = 4;
+  string cover = 5;
+  int32 sort = 6;
+  bool recommend_flag = 7;
+  bool commented_flag = 8;
+  int32 status = 9;
+  int32 view_count = 10;
+  int32 comment_count = 11;
+  int32 share_count = 12;
+  string publisher_username = 13;
+  string user_id = 14;
+  string last_commented_at = 15;
+  string created_at = 16;
+  string updated_at = 17;
+  repeated ArticleCategory category = 18;
+}
+
+message ArticleCategory {
+  string id = 1;
+  string pid = 2;
+  string name = 3;
+  int32 sort = 4;
+}
+
+message InfoRequest {
+  string id = 1;
+}
+
+message InfoResponse {
+  string id = 1;
+  string title = 2;
+  string author  = 3;
+  string summary = 4;
+  string cover = 5;
+  int32 sort = 6;
+  bool recommend_flag = 7;
+  bool commented_flag = 8;
+  int32 status = 9;
+  int32 view_count = 10;
+  int32 comment_count = 11;
+  int32 share_count = 12;
+  string publisher_username = 13;
+  string user_id = 14;
+  string last_commented_at = 15;
+  string created_at = 16;
+  string updated_at = 17;
+  optional google.protobuf.Timestamp deleted_at = 18;
+  string source = 19;
+  string source_url = 20;
+  string content = 21;
+  repeated string keyword = 22;
+  repeated string attachment_path = 23;
+  repeated ArticleCategory category = 24;
+}
+
+message AddRequest {
+  string title = 1 [(validate.rules).string = {min_len: 1, max_len: 32}];
+  string author = 2 [(validate.rules).string = {min_len: 1, max_len: 20}];
+  string summary = 3 [(validate.rules).string = {min_len: 1, max_len: 140}];
+  string cover = 4;
+  int32 sort = 5 [(validate.rules).int32 = {gt: 0, lte: 65535}];
+  bool recommend_flag = 6;
+  bool commented_flag = 7;
+  int32 status = 8;
+  int32 view_count = 9;
+  int32 comment_count = 10;
+  int32 share_count = 11;
+  string source = 12;
+  string source_url =  13;
+  string content = 14;
+  string keyword = 15;
+  string attachment_path = 16;
+}
+
+message AddResponse {
+  string id = 1;
+}
+
+message UpdateRequest {
+  string id = 1;
+  string title = 2 [(validate.rules).string = {min_len: 1, max_len: 32}];
+}
+
+message UpdateResponse {
+  string id = 1;
+}
+
+message DeleteRequest {
+  string id = 1;
+}
+
+message CategoryListResponse {
+  repeated ArticleCategory list = 1;
+  int32 count = 2;
+}

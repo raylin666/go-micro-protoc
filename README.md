@@ -1,22 +1,17 @@
-# 个人微服务项目 Proto 文件管理
+# 微服务 (GO-MICRO) 项目 Proto 文件管理
 
-目前服务
+本项目依赖于B站开源的 `kratos` 框架, 目前服务有:
 
-* 生成唯一标识服务 (uuid)
+* 文章服务 (article)
 
-  生成 proto 源码:  `kratos proto client uuid/v1`  
+* 用户服务 (user)
 
+对应的服务项目 GitHub 仓库 -> git@github.com:raylin666/go-micro.git
 
-* 短链接服务 (link)
+代码拉下来后, 通过项目提供的 `Makefile` 文件可完成项目的初始化和代码的自动生成。
 
-  生成 proto 源码:  `kratos proto client link/v1`
+1. 初始化, 下载依赖操作命令:
+> make init     
 
-* 上传服务 (upload)
-
-  生成 proto 源码: `kratos proto client upload/v1`
-
-* 鉴权服务 (auth)
-
-  生成 proto 源码: `kratos proto client auth/v1`
-
-对应 github 仓库 -> git@github.com:raylin666/go-micro.git
+2. 编写完 `proto` 文件后, 生成代码文件命令:
+> make api

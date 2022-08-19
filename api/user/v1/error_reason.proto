@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "errors/errors.proto";
+
+option go_package = "api/user/v1;v1";
+
+// kratos proto client api/user/v1/error_reason.proto
+
+enum ErrorReason {
+  // 设置缺省错误码
+  option (errors.default_code) = 500;
+
+  // 服务异常
+  SERVER_ERROR = 0;
+
+  // 数据校验失败
+  DATA_VALIDATE_ERROR = 100001 [(errors.code) = 422];
+  // 数据查询失败
+  DATA_SELECT_ERROR = 100002 [(errors.code) = 400];
+  // 数据已存在
+  DATA_ALREADY_EXISTS = 100003 [(errors.code) = 400];
+  // 数据不存在
+  DATA_NOT_FOUND = 100004 [(errors.code) = 400];
+  // 请先登录后再操作
+  NOT_LOGIN_ERROR = 100005 [(errors.code) = 401];
+
+  // 账号不存在
+  ACCOUNT_NOT_FOUND = 200001 [(errors.code) = 404];
+  // 账号或密码错误
+  ACCOUNT_OR_PASSWORD_ERROR = 200002 [(errors.code) = 400];
+  // 账号登录失败
+  ACCOUNT_LOGIN_ERROR = 200003 [(errors.code) = 400];
+  // 账号已被停用, 请联系管理员
+  ACCOUNT_FREEZE_ERROR = 200004 [(errors.code) = 400];
+  // 账号暂无权限，请联系管理员
+  ACCOUNT_PERMISSION_ERROR = 200005 [(errors.code) = 401];
+  // 账号获取菜单列表失败
+  ACCOUNT_MENU_LIST_ERROR = 200006 [(errors.code) = 400];
+}
