@@ -2,9 +2,10 @@
 
 本项目依赖于B站开源的 `kratos` 框架, 目前服务有:
 
-* 文章服务 (article)
-
-* 用户服务 (user)
+| 服务标识 | 服务名称 |
+| --- | --- |
+| article | 文章服务 |
+| user | 文章服务 |
 
 对应的服务项目 GitHub 仓库 -> git@github.com:raylin666/go-micro.git
 
