@@ -16,6 +16,29 @@
     "application/json"
   ],
   "paths": {
+    "/account/basic_info": {
+      "get": {
+        "summary": "获取账号基础信息",
+        "operationId": "Account_GetBasicInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetBasicInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Account"
+        ]
+      }
+    },
     "/account/info": {
       "get": {
         "summary": "获取账号信息",
@@ -157,7 +180,7 @@
         }
       }
     },
-    "v1GetInfoResponse": {
+    "v1GetBasicInfoResponse": {
       "type": "object",
       "properties": {
         "id": {
@@ -174,7 +197,8 @@
           "format": "int32"
         },
         "birthday_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "avatar": {
           "type": "string"
@@ -196,16 +220,77 @@
           "format": "int32"
         },
         "first_login_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "last_login_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "created_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "updated_at": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetInfoResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
           "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "real_username": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "birthday_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "phone_area": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "last_login_ip": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "first_login_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "last_login_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updated_at": {
+          "type": "integer",
+          "format": "int64"
         },
         "role": {
           "$ref": "#/definitions/v1Role"
@@ -244,7 +329,8 @@
           "type": "string"
         },
         "expire_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         }
       }
     },

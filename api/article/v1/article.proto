@@ -37,7 +37,7 @@ service Article {
   // 新增文章
   rpc Add (AddRequest) returns (AddResponse) {
     option (google.api.http) = {
-      post: "/article/add",
+      put: "/article/add",
       body: "*"
     };
   }
@@ -54,6 +54,21 @@ service Article {
   rpc Delete (DeleteRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/article/delete/{id}"
+    };
+  }
+
+  // 强制删除文章
+  rpc ForceDelete (DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/article/force_delete/{id}"
+    };
+  }
+
+  // 更新文章属性
+  rpc UpdateField (UpdateFieldRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/article/update_field/{id}/{field}",
+      body: "*"
     };
   }
 }
@@ -85,9 +100,9 @@ message ArticleList {
   int32 share_count = 12;
   string publisher_username = 13;
   string user_id = 14;
-  string last_commented_at = 15;
-  string created_at = 16;
-  string updated_at = 17;
+  uint32 last_commented_at = 15;
+  uint32 created_at = 16;
+  uint32 updated_at = 17;
   repeated ArticleCategory category = 18;
 }
 
@@ -117,9 +132,9 @@ message InfoResponse {
   int32 share_count = 12;
   string publisher_username = 13;
   string user_id = 14;
-  string last_commented_at = 15;
-  string created_at = 16;
-  string updated_at = 17;
+  uint32 last_commented_at = 15;
+  uint32 created_at = 16;
+  uint32 updated_at = 17;
   optional google.protobuf.Timestamp deleted_at = 18;
   string source = 19;
   string source_url = 20;
@@ -134,7 +149,7 @@ message AddRequest {
   string author = 2 [(validate.rules).string = {min_len: 1, max_len: 20}];
   string summary = 3 [(validate.rules).string = {min_len: 1, max_len: 140}];
   string cover = 4;
-  int32 sort = 5 [(validate.rules).int32 = {gt: 0, lte: 65535}];
+  int32 sort = 5 [(validate.rules).int32 = {gt: -1, lte: 65535}];
   bool recommend_flag = 6;
   bool commented_flag = 7;
   int32 status = 8;
@@ -143,9 +158,10 @@ message AddRequest {
   int32 share_count = 11;
   string source = 12;
   string source_url =  13;
-  string content = 14;
+  string content = 14 [(validate.rules).string = {min_len: 5}];
   string keyword = 15;
   string attachment_path = 16;
+  repeated string category = 17;
 }
 
 message AddResponse {
@@ -153,8 +169,24 @@ message AddResponse {
 }
 
 message UpdateRequest {
-  string id = 1;
-  string title = 2 [(validate.rules).string = {min_len: 1, max_len: 32}];
+  string title = 1 [(validate.rules).string = {min_len: 1, max_len: 32}];
+  string author = 2 [(validate.rules).string = {min_len: 1, max_len: 20}];
+  string summary = 3 [(validate.rules).string = {min_len: 1, max_len: 140}];
+  string cover = 4;
+  int32 sort = 5 [(validate.rules).int32 = {gt: -1, lte: 65535}];
+  bool recommend_flag = 6;
+  bool commented_flag = 7;
+  int32 status = 8;
+  int32 view_count = 9;
+  int32 comment_count = 10;
+  int32 share_count = 11;
+  string source = 12;
+  string source_url =  13;
+  string content = 14 [(validate.rules).string = {min_len: 5}];
+  string keyword = 15;
+  string attachment_path = 16;
+  repeated string category = 17;
+  string id = 18;
 }
 
 message UpdateResponse {
@@ -168,4 +200,10 @@ message DeleteRequest {
 message CategoryListResponse {
   repeated ArticleCategory list = 1;
   int32 count = 2;
+}
+
+message UpdateFieldRequest {
+  string id = 1;
+  string field = 2;
+  string value = 3;
 }

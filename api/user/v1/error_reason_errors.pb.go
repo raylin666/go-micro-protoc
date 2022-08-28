@@ -65,6 +65,51 @@ func ErrorNotLoginError(format string, args ...interface{}) *errors.Error {
 	return errors.New(401, ErrorReason_NOT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+func IsDataAddError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_DATA_ADD_ERROR.String() && e.Code == 400
+}
+
+func ErrorDataAddError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_DATA_ADD_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsDataUpdateError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_DATA_UPDATE_ERROR.String() && e.Code == 400
+}
+
+func ErrorDataUpdateError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_DATA_UPDATE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsIdInvalidValueError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ID_INVALID_VALUE_ERROR.String() && e.Code == 400
+}
+
+func ErrorIdInvalidValueError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ID_INVALID_VALUE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsDataDeleteError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_DATA_DELETE_ERROR.String() && e.Code == 400
+}
+
+func ErrorDataDeleteError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_DATA_DELETE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsDataResourceNotFound(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_DATA_RESOURCE_NOT_FOUND.String() && e.Code == 400
+}
+
+func ErrorDataResourceNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_DATA_RESOURCE_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
 func IsAccountNotFound(err error) bool {
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_ACCOUNT_NOT_FOUND.String() && e.Code == 404

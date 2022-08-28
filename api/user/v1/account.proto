@@ -27,6 +27,12 @@ service Account {
     };
   }
 
+  // 获取账号基础信息
+  rpc GetBasicInfo (google.protobuf.Empty) returns (GetBasicInfoResponse) {
+    option (google.api.http) = {
+      get: "/account/basic_info"
+    };
+  }
   // 获取账号信息
   rpc GetInfo (google.protobuf.Empty) returns (GetInfoResponse) {
     option (google.api.http) = {
@@ -50,7 +56,25 @@ message LoginRequest {
 message LoginResponse {
   string id = 1;
   string token = 2;
-  string expire_at = 3;
+  uint32 expire_at = 3;
+}
+
+message GetBasicInfoResponse {
+  string id = 1;
+  string username = 2;
+  string real_username = 3;
+  int32 sex = 4;
+  uint32 birthday_at = 5;
+  string avatar = 6;
+  string phone_area = 7;
+  string phone = 8;
+  string email = 9;
+  string last_login_ip = 10;
+  int32 status = 11;
+  uint32 first_login_at = 12;
+  uint32 last_login_at = 13;
+  uint32 created_at = 14;
+  uint32 updated_at = 15;
 }
 
 message GetInfoResponse {
@@ -58,17 +82,17 @@ message GetInfoResponse {
   string username = 2;
   string real_username = 3;
   int32 sex = 4;
-  string birthday_at = 5;
+  uint32 birthday_at = 5;
   string avatar = 6;
   string phone_area = 7;
   string phone = 8;
   string email = 9;
   string last_login_ip = 10;
   int32 status = 11;
-  string first_login_at = 12;
-  string last_login_at = 13;
-  string created_at = 14;
-  string updated_at = 15;
+  uint32 first_login_at = 12;
+  uint32 last_login_at = 13;
+  uint32 created_at = 14;
+  uint32 updated_at = 15;
   Role role = 16;
 }
 

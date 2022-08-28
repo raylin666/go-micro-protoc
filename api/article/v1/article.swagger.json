@@ -17,7 +17,7 @@
   ],
   "paths": {
     "/article/add": {
-      "post": {
+      "put": {
         "summary": "新增文章",
         "operationId": "Article_Add",
         "responses": {
@@ -76,6 +76,37 @@
       "delete": {
         "summary": "删除文章",
         "operationId": "Article_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/force_delete/{id}": {
+      "delete": {
+        "summary": "强制删除文章",
+        "operationId": "Article_ForceDelete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -207,6 +238,112 @@
               "properties": {
                 "title": {
                   "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "cover": {
+                  "type": "string"
+                },
+                "sort": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "recommend_flag": {
+                  "type": "boolean"
+                },
+                "commented_flag": {
+                  "type": "boolean"
+                },
+                "status": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "view_count": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "comment_count": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "share_count": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "source_url": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "keyword": {
+                  "type": "string"
+                },
+                "attachment_path": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/update_field/{id}/{field}": {
+      "post": {
+        "summary": "更新文章属性",
+        "operationId": "Article_UpdateField",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "field",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -301,6 +438,12 @@
         },
         "attachment_path": {
           "type": "string"
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -381,13 +524,16 @@
           "type": "string"
         },
         "last_commented_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "created_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "updated_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "category": {
           "type": "array",
@@ -463,13 +609,16 @@
           "type": "string"
         },
         "last_commented_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "created_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "updated_at": {
-          "type": "string"
+          "type": "integer",
+          "format": "int64"
         },
         "deleted_at": {
           "type": "string",

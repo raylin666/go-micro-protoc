@@ -934,10 +934,10 @@ func (m *AddRequest) validate(all bool) error {
 
 	// no validation rules for Cover
 
-	if val := m.GetSort(); val <= 0 || val > 65535 {
+	if val := m.GetSort(); val <= -1 || val > 65535 {
 		err := AddRequestValidationError{
 			field:  "Sort",
-			reason: "value must be inside range (0, 65535]",
+			reason: "value must be inside range (-1, 65535]",
 		}
 		if !all {
 			return err
@@ -961,7 +961,16 @@ func (m *AddRequest) validate(all bool) error {
 
 	// no validation rules for SourceUrl
 
-	// no validation rules for Content
+	if utf8.RuneCountInString(m.GetContent()) < 5 {
+		err := AddRequestValidationError{
+			field:  "Content",
+			reason: "value length must be at least 5 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	// no validation rules for Keyword
 
@@ -1167,8 +1176,6 @@ func (m *UpdateRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Id
-
 	if l := utf8.RuneCountInString(m.GetTitle()); l < 1 || l > 32 {
 		err := UpdateRequestValidationError{
 			field:  "Title",
@@ -1179,6 +1186,74 @@ func (m *UpdateRequest) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
+
+	if l := utf8.RuneCountInString(m.GetAuthor()); l < 1 || l > 20 {
+		err := UpdateRequestValidationError{
+			field:  "Author",
+			reason: "value length must be between 1 and 20 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetSummary()); l < 1 || l > 140 {
+		err := UpdateRequestValidationError{
+			field:  "Summary",
+			reason: "value length must be between 1 and 140 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Cover
+
+	if val := m.GetSort(); val <= -1 || val > 65535 {
+		err := UpdateRequestValidationError{
+			field:  "Sort",
+			reason: "value must be inside range (-1, 65535]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for RecommendFlag
+
+	// no validation rules for CommentedFlag
+
+	// no validation rules for Status
+
+	// no validation rules for ViewCount
+
+	// no validation rules for CommentCount
+
+	// no validation rules for ShareCount
+
+	// no validation rules for Source
+
+	// no validation rules for SourceUrl
+
+	if utf8.RuneCountInString(m.GetContent()) < 5 {
+		err := UpdateRequestValidationError{
+			field:  "Content",
+			reason: "value length must be at least 5 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Keyword
+
+	// no validation rules for AttachmentPath
+
+	// no validation rules for Id
 
 	if len(errors) > 0 {
 		return UpdateRequestMultiError(errors)
@@ -1599,3 +1674,111 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CategoryListResponseValidationError{}
+
+// Validate checks the field values on UpdateFieldRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateFieldRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateFieldRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateFieldRequestMultiError, or nil if none found.
+func (m *UpdateFieldRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateFieldRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for Field
+
+	// no validation rules for Value
+
+	if len(errors) > 0 {
+		return UpdateFieldRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateFieldRequestMultiError is an error wrapping multiple validation errors
+// returned by UpdateFieldRequest.ValidateAll() if the designated constraints
+// aren't met.
+type UpdateFieldRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateFieldRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateFieldRequestMultiError) AllErrors() []error { return m }
+
+// UpdateFieldRequestValidationError is the validation error returned by
+// UpdateFieldRequest.Validate if the designated constraints aren't met.
+type UpdateFieldRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateFieldRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateFieldRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateFieldRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateFieldRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateFieldRequestValidationError) ErrorName() string {
+	return "UpdateFieldRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateFieldRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateFieldRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateFieldRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateFieldRequestValidationError{}

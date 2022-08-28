@@ -35,6 +35,10 @@ type ArticleClient interface {
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// 删除文章
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 强制删除文章
+	ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 更新文章属性
+	UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type articleClient struct {
@@ -99,6 +103,24 @@ func (c *articleClient) Delete(ctx context.Context, in *DeleteRequest, opts ...g
 	return out, nil
 }
 
+func (c *articleClient) ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/ForceDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/UpdateField", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
@@ -115,6 +137,10 @@ type ArticleServer interface {
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// 删除文章
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
+	// 强制删除文章
+	ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
+	// 更新文章属性
+	UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -139,6 +165,12 @@ func (UnimplementedArticleServer) Update(context.Context, *UpdateRequest) (*Upda
 }
 func (UnimplementedArticleServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedArticleServer) ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForceDelete not implemented")
+}
+func (UnimplementedArticleServer) UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateField not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
@@ -261,6 +293,42 @@ func _Article_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_ForceDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).ForceDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/ForceDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).ForceDelete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_UpdateField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFieldRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).UpdateField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/UpdateField",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).UpdateField(ctx, req.(*UpdateFieldRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -291,6 +359,14 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _Article_Delete_Handler,
+		},
+		{
+			MethodName: "ForceDelete",
+			Handler:    _Article_ForceDelete_Handler,
+		},
+		{
+			MethodName: "UpdateField",
+			Handler:    _Article_UpdateField_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
