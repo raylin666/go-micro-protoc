@@ -35,6 +35,10 @@ enum ErrorReason {
   DATA_DELETE_ERROR = 100009 [(errors.code) = 400];
   // 数据资源不存在
   DATA_RESOURCE_NOT_FOUND = 100010 [(errors.code) = 400];
+  // 无效的执行指令
+  COMMAND_INVALID_NOT_FOUND = 100011 [(errors.code) = 400];
+  // 数据属性更新失败
+  DATA_UPDATE_FIELD_ERROR = 100012 [(errors.code) = 400];
 
   // 账号不存在
   ACCOUNT_NOT_FOUND = 200001 [(errors.code) = 404];

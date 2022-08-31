@@ -64,7 +64,7 @@ service Article {
     };
   }
 
-  // 更新文章属性
+  // 更新文章字段属性
   rpc UpdateField (UpdateFieldRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/article/update_field/{id}/{field}",
@@ -149,7 +149,7 @@ message AddRequest {
   string author = 2 [(validate.rules).string = {min_len: 1, max_len: 20}];
   string summary = 3 [(validate.rules).string = {min_len: 1, max_len: 140}];
   string cover = 4;
-  int32 sort = 5 [(validate.rules).int32 = {gt: -1, lte: 65535}];
+  int32 sort = 5 [(validate.rules).int32 = {gte: 0, lte: 65535}];
   bool recommend_flag = 6;
   bool commented_flag = 7;
   int32 status = 8;
@@ -173,7 +173,7 @@ message UpdateRequest {
   string author = 2 [(validate.rules).string = {min_len: 1, max_len: 20}];
   string summary = 3 [(validate.rules).string = {min_len: 1, max_len: 140}];
   string cover = 4;
-  int32 sort = 5 [(validate.rules).int32 = {gt: -1, lte: 65535}];
+  int32 sort = 5 [(validate.rules).int32 = {gte: 0, lte: 65535}];
   bool recommend_flag = 6;
   bool commented_flag = 7;
   int32 status = 8;
@@ -204,6 +204,6 @@ message CategoryListResponse {
 
 message UpdateFieldRequest {
   string id = 1;
-  string field = 2;
+  string field = 2 [(validate.rules).string = {in: ["sort", "recommend_flag", "commented_flag", "status"]}];
   string value = 3;
 }

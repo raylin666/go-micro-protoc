@@ -934,10 +934,10 @@ func (m *AddRequest) validate(all bool) error {
 
 	// no validation rules for Cover
 
-	if val := m.GetSort(); val <= -1 || val > 65535 {
+	if val := m.GetSort(); val < 0 || val > 65535 {
 		err := AddRequestValidationError{
 			field:  "Sort",
-			reason: "value must be inside range (-1, 65535]",
+			reason: "value must be inside range [0, 65535]",
 		}
 		if !all {
 			return err
@@ -1211,10 +1211,10 @@ func (m *UpdateRequest) validate(all bool) error {
 
 	// no validation rules for Cover
 
-	if val := m.GetSort(); val <= -1 || val > 65535 {
+	if val := m.GetSort(); val < 0 || val > 65535 {
 		err := UpdateRequestValidationError{
 			field:  "Sort",
-			reason: "value must be inside range (-1, 65535]",
+			reason: "value must be inside range [0, 65535]",
 		}
 		if !all {
 			return err
@@ -1699,7 +1699,16 @@ func (m *UpdateFieldRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for Field
+	if _, ok := _UpdateFieldRequest_Field_InLookup[m.GetField()]; !ok {
+		err := UpdateFieldRequestValidationError{
+			field:  "Field",
+			reason: "value must be in list [sort recommend_flag commented_flag status]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	// no validation rules for Value
 
@@ -1782,3 +1791,10 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UpdateFieldRequestValidationError{}
+
+var _UpdateFieldRequest_Field_InLookup = map[string]struct{}{
+	"sort":           {},
+	"recommend_flag": {},
+	"commented_flag": {},
+	"status":         {},
+}

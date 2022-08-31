@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package basic.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+option go_package = "api/basic/v1;v1";
+
+// kratos proto client api/basic/v1/upload.proto
+
+// 上传服务
+service Upload {
+  // 数据流方式上传文件
+  rpc StreamUploadFile (StreamUploadFileRequest) returns (StreamUploadFileResponse) {
+    option (google.api.http) = {
+      put: "/upload/file/stream"
+      body: "*"
+    };
+  }
+
+  // 通过URL资源地址方式上传文件
+  rpc UrlUploadFile (UrlUploadFileRequest) returns (UrlUploadFileResponse) {
+    option (google.api.http) = {
+      post: "/upload/file/url"
+      body: "*"
+    };
+  }
+}
+
+message StreamUploadFileRequest {
+  bytes  stream = 1 [(validate.rules).bytes.min_len = 10];
+  string mime_type = 2 [(validate.rules).string.min_len = 3];
+}
+
+message StreamUploadFileResponse {
+  string hash = 1;
+  string uuid = 2;
+  string key = 3;
+  int64  fsize = 4;
+  string url = 5;
+  string name = 6;
+  string bucket = 7;
+  string mime_type = 8;
+  string ext = 9;
+}
+
+message UrlUploadFileRequest {
+  string url = 1 [(validate.rules).string.uri = true];
+}
+
+message UrlUploadFileResponse {
+  string hash = 1;
+  string key = 3;
+  int64  fsize = 4;
+  string url = 5;
+  string mime_type = 8;
+}

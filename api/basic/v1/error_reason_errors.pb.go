@@ -128,56 +128,56 @@ func ErrorDataUpdateFieldError(format string, args ...interface{}) *errors.Error
 	return errors.New(400, ErrorReason_DATA_UPDATE_FIELD_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountNotFound(err error) bool {
+func IsGenerateUuidError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_NOT_FOUND.String() && e.Code == 404
+	return e.Reason == ErrorReason_GENERATE_UUID_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(404, ErrorReason_ACCOUNT_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+func ErrorGenerateUuidError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_GENERATE_UUID_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountOrPasswordError(err error) bool {
+func IsGenerateShortUrlError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_GENERATE_SHORT_URL_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountOrPasswordError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String(), fmt.Sprintf(format, args...))
+func ErrorGenerateShortUrlError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_GENERATE_SHORT_URL_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountLoginError(err error) bool {
+func IsGetShortUrlError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_LOGIN_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_GET_SHORT_URL_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountLoginError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
+func ErrorGetShortUrlError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_GET_SHORT_URL_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountFreezeError(err error) bool {
+func IsUploadFileError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_FREEZE_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_UPLOAD_FILE_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountFreezeError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_FREEZE_ERROR.String(), fmt.Sprintf(format, args...))
+func ErrorUploadFileError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_UPLOAD_FILE_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountPermissionError(err error) bool {
+func IsCreateUploadMediaError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_PERMISSION_ERROR.String() && e.Code == 401
+	return e.Reason == ErrorReason_CREATE_UPLOAD_MEDIA_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountPermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(401, ErrorReason_ACCOUNT_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+func ErrorCreateUploadMediaError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_CREATE_UPLOAD_MEDIA_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountMenuListError(err error) bool {
+func IsGetFileResourceError(err error) bool {
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_MENU_LIST_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_GET_FILE_RESOURCE_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountMenuListError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_MENU_LIST_ERROR.String(), fmt.Sprintf(format, args...))
+func ErrorGetFileResourceError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_GET_FILE_RESOURCE_ERROR.String(), fmt.Sprintf(format, args...))
 }

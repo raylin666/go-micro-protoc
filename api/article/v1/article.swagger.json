@@ -306,7 +306,7 @@
     },
     "/article/update_field/{id}/{field}": {
       "post": {
-        "summary": "更新文章属性",
+        "summary": "更新文章字段属性",
         "operationId": "Article_UpdateField",
         "responses": {
           "200": {

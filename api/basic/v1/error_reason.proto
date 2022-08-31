@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package article.v1;
+package basic.v1;
 
 import "errors/errors.proto";
 
-option go_package = "api/article/v1;v1";
+option go_package = "api/basic/v1;v1";
 
-// kratos proto client api/article/v1/error_reason.proto
+// kratos proto client api/basic/v1/error_reason.proto
 
 enum ErrorReason {
   // 设置缺省错误码
@@ -39,4 +39,19 @@ enum ErrorReason {
   COMMAND_INVALID_NOT_FOUND = 100011 [(errors.code) = 400];
   // 数据属性更新失败
   DATA_UPDATE_FIELD_ERROR = 100012 [(errors.code) = 400];
+
+  // 生成唯一标识失败
+  GENERATE_UUID_ERROR = 200001 [(errors.code) = 400];
+
+  // 生成短链接失败
+  GENERATE_SHORT_URL_ERROR = 300001 [(errors.code) = 400];
+  // 获取短链接失败
+  GET_SHORT_URL_ERROR = 300002 [(errors.code) = 400];
+
+  // 上传文件失败
+  UPLOAD_FILE_ERROR = 400001 [(errors.code) = 400];
+  // 创建媒体上传失败
+  CREATE_UPLOAD_MEDIA_ERROR = 400002 [(errors.code) = 400];
+  // 获取文件资源失败
+  GET_FILE_RESOURCE_ERROR = 400003 [(errors.code) = 400];
 }

@@ -37,7 +37,7 @@ type ArticleClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 强制删除文章
 	ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 更新文章属性
+	// 更新文章字段属性
 	UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -139,7 +139,7 @@ type ArticleServer interface {
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	// 强制删除文章
 	ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	// 更新文章属性
+	// 更新文章字段属性
 	UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedArticleServer()
 }

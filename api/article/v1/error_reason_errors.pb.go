@@ -109,3 +109,21 @@ func IsDataResourceNotFound(err error) bool {
 func ErrorDataResourceNotFound(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_RESOURCE_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }
+
+func IsCommandInvalidNotFound(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_COMMAND_INVALID_NOT_FOUND.String() && e.Code == 400
+}
+
+func ErrorCommandInvalidNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_COMMAND_INVALID_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+func IsDataUpdateFieldError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_DATA_UPDATE_FIELD_ERROR.String() && e.Code == 400
+}
+
+func ErrorDataUpdateFieldError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_DATA_UPDATE_FIELD_ERROR.String(), fmt.Sprintf(format, args...))
+}
