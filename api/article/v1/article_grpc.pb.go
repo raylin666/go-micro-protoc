@@ -23,8 +23,6 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ArticleClient interface {
-	// 文章分类列表
-	CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error)
 	// 文章列表
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
 	// 文章详情
@@ -39,6 +37,8 @@ type ArticleClient interface {
 	ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 更新文章字段属性
 	UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 文章分类列表
+	CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error)
 }
 
 type articleClient struct {
@@ -47,15 +47,6 @@ type articleClient struct {
 
 func NewArticleClient(cc grpc.ClientConnInterface) ArticleClient {
 	return &articleClient{cc}
-}
-
-func (c *articleClient) CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error) {
-	out := new(CategoryListResponse)
-	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryList", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *articleClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
@@ -121,12 +112,19 @@ func (c *articleClient) UpdateField(ctx context.Context, in *UpdateFieldRequest,
 	return out, nil
 }
 
+func (c *articleClient) CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error) {
+	out := new(CategoryListResponse)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
 type ArticleServer interface {
-	// 文章分类列表
-	CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error)
 	// 文章列表
 	List(context.Context, *ListRequest) (*ListResponse, error)
 	// 文章详情
@@ -141,6 +139,8 @@ type ArticleServer interface {
 	ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	// 更新文章字段属性
 	UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error)
+	// 文章分类列表
+	CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -148,9 +148,6 @@ type ArticleServer interface {
 type UnimplementedArticleServer struct {
 }
 
-func (UnimplementedArticleServer) CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
-}
 func (UnimplementedArticleServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
@@ -172,6 +169,9 @@ func (UnimplementedArticleServer) ForceDelete(context.Context, *DeleteRequest) (
 func (UnimplementedArticleServer) UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateField not implemented")
 }
+func (UnimplementedArticleServer) CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
+}
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
 // UnsafeArticleServer may be embedded to opt out of forward compatibility for this service.
@@ -183,24 +183,6 @@ type UnsafeArticleServer interface {
 
 func RegisterArticleServer(s grpc.ServiceRegistrar, srv ArticleServer) {
 	s.RegisterService(&Article_ServiceDesc, srv)
-}
-
-func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ArticleServer).CategoryList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/article.v1.Article/CategoryList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArticleServer).CategoryList(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Article_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -329,6 +311,24 @@ func _Article_UpdateField_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryList(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -336,10 +336,6 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "article.v1.Article",
 	HandlerType: (*ArticleServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CategoryList",
-			Handler:    _Article_CategoryList_Handler,
-		},
 		{
 			MethodName: "List",
 			Handler:    _Article_List_Handler,
@@ -367,6 +363,10 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateField",
 			Handler:    _Article_UpdateField_Handler,
+		},
+		{
+			MethodName: "CategoryList",
+			Handler:    _Article_CategoryList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

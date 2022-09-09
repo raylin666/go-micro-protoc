@@ -1,0 +1,242 @@
+syntax = "proto3";
+
+package user.v1;
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "api/user/v1;v1";
+
+// kratos proto client api/user/v1/auth_control.proto
+
+// 访问控制服务
+service AuthControl {
+  // 获取用户具有的角色
+  rpc GetRolesForUser (GetRolesForUserRequest) returns (GetRolesForUserResponse) {
+    option (google.api.http) = {
+      get: "/auth_control/user/{user_id}/roles"
+    };
+  }
+
+  // 用户添加角色
+  rpc AddRoleForUser (AddRoleForUserRequest) returns (AddRoleForUserResponse) {
+    option (google.api.http) = {
+      post: "/auth_control/user/{user_id}/add_role"
+      body: "*"
+    };
+  }
+
+  // 用户添加多个角色
+  rpc AddRolesForUser (AddRolesForUserRequest) returns (AddRolesForUserResponse) {
+    option (google.api.http) = {
+      post: "/auth_control/user/{user_id}/add_roles"
+      body: "*"
+    };
+  }
+
+  // 获取具有角色的用户
+  rpc GetUsersForRole (GetUsersForRoleRequest) returns (GetUsersForRoleResponse) {
+    option (google.api.http) = {
+      get: "/auth_control/role/{role}/users"
+    };
+  }
+
+  // 确定用户是否具有角色
+  rpc HasRoleForUser (HasRoleForUserRequest) returns (HasRoleForUserResponse) {
+    option (google.api.http) = {
+      get: "/auth_control/has_role/{user_id}/{role}"
+    };
+  }
+
+  // 删除用户的角色
+  rpc DeleteRoleForUser (DeleteRoleForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/delete_role/{user_id}/{role}"
+    };
+  }
+
+  // 删除用户的所有角色
+  rpc DeleteRolesForUser (DeleteRolesForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/delete_roles/{user_id}"
+    };
+  }
+
+  // 删除用户
+  rpc DeleteUser (DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/user/delete/{user_id}"
+    };
+  }
+
+  // 删除角色
+  rpc DeleteRole (DeleteRoleRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/role/delete/{role}"
+    };
+  }
+
+  // 删除权限
+  rpc DeletePermission (DeletePermissionRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/permission/delete/{permission}"
+    };
+  }
+
+  // 为用户或角色添加权限
+  rpc AddPermissionForUser (AddPermissionForUserRequest) returns (AddPermissionForUserResponse) {
+    option (google.api.http) = {
+      post: "/auth_control/user/{user}/add_permission",
+      body: "*"
+    };
+  }
+
+  // 为用户或角色添加多个权限
+  rpc AddPermissionsForUser (AddPermissionsForUserRequest) returns (AddPermissionsForUserResponse) {
+    option (google.api.http) = {
+      post: "/auth_control/user/{user}/add_permissions",
+      body: "*"
+    };
+  }
+
+  // 删除用户或角色的权限
+  rpc DeletePermissionForUser (DeletePermissionForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/delete_permission/{user}/{permission}"
+    };
+  }
+
+  // 删除用户或角色的所有权限
+  rpc DeletePermissionsForUser (DeletePermissionsForUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/auth_control/user/delete_permissions/{user}"
+    };
+  }
+
+  // 获取用户或角色的权限
+  rpc GetPermissionsForUser (GetPermissionsForUserRequest) returns (GetPermissionsForUserResponse) {
+    option (google.api.http) = {
+      get: "/auth_control/user/{user}/permissions"
+    };
+  }
+
+  // 确定用户是否具有权限
+  rpc HasPermissionForUser (HasPermissionForUserRequest) returns (HasPermissionForUserResponse) {
+    option (google.api.http) = {
+      get: "/auth_control/has_permission/{user}"
+    };
+  }
+}
+
+message GetRolesForUserRequest {
+  string user_id = 1;
+}
+
+message GetRolesForUserResponse {
+  repeated string roles = 1;
+}
+
+message AddRoleForUserRequest {
+  string user_id = 1;
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+
+message AddRoleForUserResponse {
+  string user_id = 1;
+  string role = 2;
+}
+
+message AddRolesForUserRequest {
+  string user_id = 1;
+  repeated string roles = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message AddRolesForUserResponse {
+  string user_id = 1;
+  repeated string roles = 2;
+}
+
+message GetUsersForRoleRequest {
+  string role = 1;
+}
+
+message GetUsersForRoleResponse {
+  repeated string user_ids = 1;
+}
+
+message HasRoleForUserRequest {
+  string user_id = 1;
+  string role = 2 [(validate.rules).string.min_len = 1];
+}
+
+message HasRoleForUserResponse {
+  bool has = 1;
+}
+
+message DeleteRoleForUserRequest {
+  string user_id = 1;
+  string role = 2;
+}
+
+message DeleteRolesForUserRequest {
+  string user_id = 1;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message DeleteRoleRequest {
+  string role = 1;
+}
+
+message DeletePermissionRequest {
+  string permission = 1;
+}
+
+message AddPermissionForUserRequest {
+  string user = 1;
+  string permission = 2 [(validate.rules).string.min_len = 1];
+}
+
+message AddPermissionForUserResponse {
+  string user = 1;
+  string permission = 2;
+}
+
+message AddPermissionsForUserRequest {
+  string user = 1;
+  repeated string permissions = 2 [(validate.rules).repeated.min_items = 1];
+}
+
+message AddPermissionsForUserResponse {
+  string user = 1;
+  repeated string permissions = 2;
+}
+
+message DeletePermissionForUserRequest {
+  string user = 1;
+  string permission = 2;
+}
+
+message DeletePermissionsForUserRequest {
+  string user = 1;
+}
+
+message GetPermissionsForUserRequest {
+  string user = 1;
+}
+
+message GetPermissionsForUserResponse {
+  repeated string permissions = 1;
+}
+
+message HasPermissionForUserRequest {
+  string user = 1;
+  string permission = 2 [(validate.rules).string.min_len = 1];
+}
+
+message HasPermissionForUserResponse {
+  bool has = 1;
+}

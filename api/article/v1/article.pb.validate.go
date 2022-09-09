@@ -972,10 +972,6 @@ func (m *AddRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Keyword
-
-	// no validation rules for AttachmentPath
-
 	if len(errors) > 0 {
 		return AddRequestMultiError(errors)
 	}
@@ -1248,10 +1244,6 @@ func (m *UpdateRequest) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
-
-	// no validation rules for Keyword
-
-	// no validation rules for AttachmentPath
 
 	// no validation rules for Id
 
@@ -1537,6 +1529,130 @@ var _ interface {
 	ErrorName() string
 } = DeleteRequestValidationError{}
 
+// Validate checks the field values on UpdateFieldRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateFieldRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateFieldRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateFieldRequestMultiError, or nil if none found.
+func (m *UpdateFieldRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateFieldRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	if _, ok := _UpdateFieldRequest_Field_InLookup[m.GetField()]; !ok {
+		err := UpdateFieldRequestValidationError{
+			field:  "Field",
+			reason: "value must be in list [sort recommend_flag commented_flag status]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Value
+
+	if len(errors) > 0 {
+		return UpdateFieldRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateFieldRequestMultiError is an error wrapping multiple validation errors
+// returned by UpdateFieldRequest.ValidateAll() if the designated constraints
+// aren't met.
+type UpdateFieldRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateFieldRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateFieldRequestMultiError) AllErrors() []error { return m }
+
+// UpdateFieldRequestValidationError is the validation error returned by
+// UpdateFieldRequest.Validate if the designated constraints aren't met.
+type UpdateFieldRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateFieldRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateFieldRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateFieldRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateFieldRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateFieldRequestValidationError) ErrorName() string {
+	return "UpdateFieldRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateFieldRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateFieldRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateFieldRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateFieldRequestValidationError{}
+
+var _UpdateFieldRequest_Field_InLookup = map[string]struct{}{
+	"sort":           {},
+	"recommend_flag": {},
+	"commented_flag": {},
+	"status":         {},
+}
+
 // Validate checks the field values on CategoryListResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1675,22 +1791,22 @@ var _ interface {
 	ErrorName() string
 } = CategoryListResponseValidationError{}
 
-// Validate checks the field values on UpdateFieldRequest with the rules
+// Validate checks the field values on ArticleCategoryList with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *UpdateFieldRequest) Validate() error {
+func (m *ArticleCategoryList) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on UpdateFieldRequest with the rules
+// ValidateAll checks the field values on ArticleCategoryList with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// UpdateFieldRequestMultiError, or nil if none found.
-func (m *UpdateFieldRequest) ValidateAll() error {
+// ArticleCategoryListMultiError, or nil if none found.
+func (m *ArticleCategoryList) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *UpdateFieldRequest) validate(all bool) error {
+func (m *ArticleCategoryList) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1699,33 +1815,28 @@ func (m *UpdateFieldRequest) validate(all bool) error {
 
 	// no validation rules for Id
 
-	if _, ok := _UpdateFieldRequest_Field_InLookup[m.GetField()]; !ok {
-		err := UpdateFieldRequestValidationError{
-			field:  "Field",
-			reason: "value must be in list [sort recommend_flag commented_flag status]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Pid
 
-	// no validation rules for Value
+	// no validation rules for Name
+
+	// no validation rules for Sort
+
+	// no validation rules for ArticleCount
 
 	if len(errors) > 0 {
-		return UpdateFieldRequestMultiError(errors)
+		return ArticleCategoryListMultiError(errors)
 	}
 
 	return nil
 }
 
-// UpdateFieldRequestMultiError is an error wrapping multiple validation errors
-// returned by UpdateFieldRequest.ValidateAll() if the designated constraints
-// aren't met.
-type UpdateFieldRequestMultiError []error
+// ArticleCategoryListMultiError is an error wrapping multiple validation
+// errors returned by ArticleCategoryList.ValidateAll() if the designated
+// constraints aren't met.
+type ArticleCategoryListMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m UpdateFieldRequestMultiError) Error() string {
+func (m ArticleCategoryListMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1734,11 +1845,11 @@ func (m UpdateFieldRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m UpdateFieldRequestMultiError) AllErrors() []error { return m }
+func (m ArticleCategoryListMultiError) AllErrors() []error { return m }
 
-// UpdateFieldRequestValidationError is the validation error returned by
-// UpdateFieldRequest.Validate if the designated constraints aren't met.
-type UpdateFieldRequestValidationError struct {
+// ArticleCategoryListValidationError is the validation error returned by
+// ArticleCategoryList.Validate if the designated constraints aren't met.
+type ArticleCategoryListValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1746,24 +1857,24 @@ type UpdateFieldRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e UpdateFieldRequestValidationError) Field() string { return e.field }
+func (e ArticleCategoryListValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UpdateFieldRequestValidationError) Reason() string { return e.reason }
+func (e ArticleCategoryListValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UpdateFieldRequestValidationError) Cause() error { return e.cause }
+func (e ArticleCategoryListValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UpdateFieldRequestValidationError) Key() bool { return e.key }
+func (e ArticleCategoryListValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UpdateFieldRequestValidationError) ErrorName() string {
-	return "UpdateFieldRequestValidationError"
+func (e ArticleCategoryListValidationError) ErrorName() string {
+	return "ArticleCategoryListValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e UpdateFieldRequestValidationError) Error() string {
+func (e ArticleCategoryListValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1775,14 +1886,14 @@ func (e UpdateFieldRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUpdateFieldRequest.%s: %s%s",
+		"invalid %sArticleCategoryList.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UpdateFieldRequestValidationError{}
+var _ error = ArticleCategoryListValidationError{}
 
 var _ interface {
 	Field() string
@@ -1790,11 +1901,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UpdateFieldRequestValidationError{}
-
-var _UpdateFieldRequest_Field_InLookup = map[string]struct{}{
-	"sort":           {},
-	"recommend_flag": {},
-	"commented_flag": {},
-	"status":         {},
-}
+} = ArticleCategoryListValidationError{}

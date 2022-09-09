@@ -181,3 +181,102 @@ func IsAccountMenuListError(err error) bool {
 func ErrorAccountMenuListError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_ACCOUNT_MENU_LIST_ERROR.String(), fmt.Sprintf(format, args...))
 }
+
+func IsAuthControlUserAddRoleError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlUserAddRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlDeleteUserRoleError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlDeleteUserRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlDeleteUserRolesError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlDeleteUserRolesError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlGetError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_GET_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlGetError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlDeleteUserError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlDeleteUserError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlDeleteRoleError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlDeleteRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlDeletePermissionError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlDeletePermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlUserAddPermissionError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlUserAddPermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlUserDeletePermissionError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlUserDeletePermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlUserDeletePermissionsError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlUserDeletePermissionsError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+func IsAuthControlGetUserPermissionError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+func ErrorAuthControlGetUserPermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}

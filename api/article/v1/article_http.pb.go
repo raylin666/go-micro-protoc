@@ -42,7 +42,6 @@ type ArticleHTTPServer interface {
 
 func RegisterArticleHTTPServer(s *http.Server, srv ArticleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/article/category/list", _Article_CategoryList0_HTTP_Handler(srv))
 	r.GET("/article/list", _Article_List0_HTTP_Handler(srv))
 	r.GET("/article/info/{id}", _Article_Info0_HTTP_Handler(srv))
 	r.PUT("/article/add", _Article_Add0_HTTP_Handler(srv))
@@ -50,25 +49,7 @@ func RegisterArticleHTTPServer(s *http.Server, srv ArticleHTTPServer) {
 	r.DELETE("/article/delete/{id}", _Article_Delete0_HTTP_Handler(srv))
 	r.DELETE("/article/force_delete/{id}", _Article_ForceDelete0_HTTP_Handler(srv))
 	r.POST("/article/update_field/{id}/{field}", _Article_UpdateField0_HTTP_Handler(srv))
-}
-
-func _Article_CategoryList0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context) error {
-	return func(ctx http.Context) error {
-		var in emptypb.Empty
-		if err := ctx.BindQuery(&in); err != nil {
-			return err
-		}
-		http.SetOperation(ctx, OperationArticleCategoryList)
-		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CategoryList(ctx, req.(*emptypb.Empty))
-		})
-		out, err := h(ctx, &in)
-		if err != nil {
-			return err
-		}
-		reply := out.(*CategoryListResponse)
-		return ctx.Result(200, reply)
-	}
+	r.GET("/article/category/list", _Article_CategoryList0_HTTP_Handler(srv))
 }
 
 func _Article_List0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context) error {
@@ -215,6 +196,25 @@ func _Article_UpdateField0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Con
 			return err
 		}
 		reply := out.(*emptypb.Empty)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _Article_CategoryList0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in emptypb.Empty
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationArticleCategoryList)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.CategoryList(ctx, req.(*emptypb.Empty))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*CategoryListResponse)
 		return ctx.Result(200, reply)
 	}
 }

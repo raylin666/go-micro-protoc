@@ -284,10 +284,16 @@
                   "type": "string"
                 },
                 "keyword": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "attachment_path": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 },
                 "category": {
                   "type": "array",
@@ -434,10 +440,16 @@
           "type": "string"
         },
         "keyword": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "attachment_path": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "category": {
           "type": "array",
@@ -470,6 +482,27 @@
         "sort": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "v1ArticleCategoryList": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "pid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "article_count": {
+          "type": "string"
         }
       }
     },
@@ -549,7 +582,7 @@
         "list": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1ArticleCategory"
+            "$ref": "#/definitions/v1ArticleCategoryList"
           }
         },
         "count": {

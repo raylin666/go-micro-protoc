@@ -52,4 +52,27 @@ enum ErrorReason {
   ACCOUNT_PERMISSION_ERROR = 200005 [(errors.code) = 401];
   // 账号获取菜单列表失败
   ACCOUNT_MENU_LIST_ERROR = 200006 [(errors.code) = 400];
+
+  // 访问控制 - 用户添加角色失败
+  AUTH_CONTROL_USER_ADD_ROLE_ERROR = 300001 [(errors.code) = 400];
+  // 访问控制 - 删除用户角色失败
+  AUTH_CONTROL_DELETE_USER_ROLE_ERROR = 300002 [(errors.code) = 400];
+  // 访问控制 - 删除用户所有角色失败
+  AUTH_CONTROL_DELETE_USER_ROLES_ERROR = 300003 [(errors.code) = 400];
+  // 访问控制 - 获取访问控制信息失败
+  AUTH_CONTROL_GET_ERROR = 300004 [(errors.code) = 400];
+  // 访问控制 - 删除用户失败
+  AUTH_CONTROL_DELETE_USER_ERROR = 300005 [(errors.code) = 400];
+  // 访问控制 - 删除角色失败
+  AUTH_CONTROL_DELETE_ROLE_ERROR = 300006 [(errors.code) = 400];
+  // 访问控制 - 删除权限失败
+  AUTH_CONTROL_DELETE_PERMISSION_ERROR = 300007 [(errors.code) = 400];
+  // 访问控制 - 用户或角色添加权限失败
+  AUTH_CONTROL_USER_ADD_PERMISSION_ERROR = 300008 [(errors.code) = 400];
+  // 访问控制 - 删除用户或角色的权限失败
+  AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR = 300009 [(errors.code) = 400];
+  // 访问控制 - 删除用户或角色的所有权限失败
+  AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR = 300010 [(errors.code) = 400];
+  // 访问控制 - 获取用户或角色的权限失败
+  AUTH_CONTROL_GET_USER_PERMISSION_ERROR = 300011 [(errors.code) = 400];
 }

@@ -13,13 +13,6 @@ option go_package = "api/article/v1;v1";
 
 // 文章服务
 service Article {
-  // 文章分类列表
-  rpc CategoryList (google.protobuf.Empty) returns (CategoryListResponse) {
-    option (google.api.http) = {
-      get: "/article/category/list"
-    };
-  }
-
   // 文章列表
   rpc List (ListRequest) returns (ListResponse) {
     option (google.api.http) = {
@@ -69,6 +62,13 @@ service Article {
     option (google.api.http) = {
       post: "/article/update_field/{id}/{field}",
       body: "*"
+    };
+  }
+
+  // 文章分类列表
+  rpc CategoryList (google.protobuf.Empty) returns (CategoryListResponse) {
+    option (google.api.http) = {
+      get: "/article/category/list"
     };
   }
 }
@@ -159,8 +159,8 @@ message AddRequest {
   string source = 12;
   string source_url =  13;
   string content = 14 [(validate.rules).string = {min_len: 5}];
-  string keyword = 15;
-  string attachment_path = 16;
+  repeated string keyword = 15;
+  repeated string attachment_path = 16;
   repeated string category = 17;
 }
 
@@ -183,8 +183,8 @@ message UpdateRequest {
   string source = 12;
   string source_url =  13;
   string content = 14 [(validate.rules).string = {min_len: 5}];
-  string keyword = 15;
-  string attachment_path = 16;
+  repeated string keyword = 15;
+  repeated string attachment_path = 16;
   repeated string category = 17;
   string id = 18;
 }
@@ -197,13 +197,21 @@ message DeleteRequest {
   string id = 1;
 }
 
-message CategoryListResponse {
-  repeated ArticleCategory list = 1;
-  int32 count = 2;
-}
-
 message UpdateFieldRequest {
   string id = 1;
   string field = 2 [(validate.rules).string = {in: ["sort", "recommend_flag", "commented_flag", "status"]}];
   string value = 3;
+}
+
+message CategoryListResponse {
+  repeated ArticleCategoryList list = 1;
+  int32 count = 2;
+}
+
+message ArticleCategoryList {
+  string id = 1;
+  string pid = 2;
+  string name = 3;
+  int32 sort = 4;
+  string article_count = 5;
 }
