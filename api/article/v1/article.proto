@@ -71,6 +71,51 @@ service Article {
       get: "/article/category/list"
     };
   }
+
+  // 文章分类详情
+  rpc CategoryInfo (CategoryInfoRequest) returns (CategoryInfoResponse) {
+    option (google.api.http) = {
+      get: "/article/category/info/{id}"
+    };
+  }
+
+  // 新增文章分类
+  rpc CategoryAdd (CategoryAddRequest) returns (CategoryAddResponse) {
+    option (google.api.http) = {
+      put: "/article/category/add",
+      body: "*"
+    };
+  }
+
+  // 更新文章分类
+  rpc CategoryUpdate (CategoryUpdateRequest) returns (CategoryUpdateResponse) {
+    option (google.api.http) = {
+      post: "/article/category/update/{id}",
+      body: "*"
+    };
+  }
+
+  // 删除文章分类
+  rpc CategoryDelete (CategoryDeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/article/category/delete/{id}"
+    };
+  }
+
+  // 强制删除文章分类
+  rpc CategoryForceDelete (CategoryDeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/article/category/force_delete/{id}"
+    };
+  }
+
+  // 更新文章分类字段属性
+  rpc CategoryUpdateField (CategoryUpdateFieldRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/article/category/update_field/{id}/{field}",
+      body: "*"
+    };
+  }
 }
 
 message ListRequest {
@@ -214,4 +259,53 @@ message ArticleCategoryList {
   string name = 3;
   int32 sort = 4;
   string article_count = 5;
+}
+
+message CategoryInfoRequest {
+  string id = 1;
+}
+
+message CategoryInfoResponse {
+  string id = 1;
+  string pid = 2;
+  string name = 3;
+  int32 sort = 4;
+  int32 status = 5;
+  uint32 created_at = 6;
+  uint32 updated_at = 7;
+  optional google.protobuf.Timestamp deleted_at = 8;
+  string article_count = 9;
+}
+
+message CategoryAddRequest {
+  int64 pid = 1 [(validate.rules).int64 = {gte: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 12}];
+  int32 sort = 3 [(validate.rules).int32 = {gte: 0, lte: 65535}];
+  int32 status = 4;
+}
+
+message CategoryAddResponse {
+  string id = 1;
+}
+
+message CategoryUpdateRequest {
+  int64 pid = 1 [(validate.rules).int64 = {gte: 0}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 12}];
+  int32 sort = 3 [(validate.rules).int32 = {gte: 0, lte: 65535}];
+  int32 status = 4;
+  string id = 5;
+}
+
+message CategoryUpdateResponse {
+  string id = 1;
+}
+
+message CategoryDeleteRequest {
+  string id = 1;
+}
+
+message CategoryUpdateFieldRequest {
+  string id = 1;
+  string field = 2 [(validate.rules).string = {in: ["sort", "status"]}];
+  string value = 3;
 }

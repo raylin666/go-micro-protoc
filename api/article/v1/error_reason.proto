@@ -39,4 +39,7 @@ enum ErrorReason {
   COMMAND_INVALID_NOT_FOUND = 100011 [(errors.code) = 400];
   // 数据属性更新失败
   DATA_UPDATE_FIELD_ERROR = 100012 [(errors.code) = 400];
+
+  // 请先删除分类下的所有文章
+  ARTICLE_IN_CATEGORY_ERROR = 200001 [(errors.code) = 400];
 }

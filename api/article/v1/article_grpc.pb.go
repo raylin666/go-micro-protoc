@@ -39,6 +39,18 @@ type ArticleClient interface {
 	UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 文章分类列表
 	CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error)
+	// 文章分类详情
+	CategoryInfo(ctx context.Context, in *CategoryInfoRequest, opts ...grpc.CallOption) (*CategoryInfoResponse, error)
+	// 新增文章分类
+	CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error)
+	// 更新文章分类
+	CategoryUpdate(ctx context.Context, in *CategoryUpdateRequest, opts ...grpc.CallOption) (*CategoryUpdateResponse, error)
+	// 删除文章分类
+	CategoryDelete(ctx context.Context, in *CategoryDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 强制删除文章分类
+	CategoryForceDelete(ctx context.Context, in *CategoryDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 更新文章分类字段属性
+	CategoryUpdateField(ctx context.Context, in *CategoryUpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type articleClient struct {
@@ -121,6 +133,60 @@ func (c *articleClient) CategoryList(ctx context.Context, in *emptypb.Empty, opt
 	return out, nil
 }
 
+func (c *articleClient) CategoryInfo(ctx context.Context, in *CategoryInfoRequest, opts ...grpc.CallOption) (*CategoryInfoResponse, error) {
+	out := new(CategoryInfoResponse)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) CategoryAdd(ctx context.Context, in *CategoryAddRequest, opts ...grpc.CallOption) (*CategoryAddResponse, error) {
+	out := new(CategoryAddResponse)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryAdd", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) CategoryUpdate(ctx context.Context, in *CategoryUpdateRequest, opts ...grpc.CallOption) (*CategoryUpdateResponse, error) {
+	out := new(CategoryUpdateResponse)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryUpdate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) CategoryDelete(ctx context.Context, in *CategoryDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) CategoryForceDelete(ctx context.Context, in *CategoryDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryForceDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) CategoryUpdateField(ctx context.Context, in *CategoryUpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryUpdateField", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ArticleServer is the server API for Article service.
 // All implementations must embed UnimplementedArticleServer
 // for forward compatibility
@@ -141,6 +207,18 @@ type ArticleServer interface {
 	UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error)
 	// 文章分类列表
 	CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error)
+	// 文章分类详情
+	CategoryInfo(context.Context, *CategoryInfoRequest) (*CategoryInfoResponse, error)
+	// 新增文章分类
+	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
+	// 更新文章分类
+	CategoryUpdate(context.Context, *CategoryUpdateRequest) (*CategoryUpdateResponse, error)
+	// 删除文章分类
+	CategoryDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
+	// 强制删除文章分类
+	CategoryForceDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
+	// 更新文章分类字段属性
+	CategoryUpdateField(context.Context, *CategoryUpdateFieldRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedArticleServer()
 }
 
@@ -171,6 +249,24 @@ func (UnimplementedArticleServer) UpdateField(context.Context, *UpdateFieldReque
 }
 func (UnimplementedArticleServer) CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
+}
+func (UnimplementedArticleServer) CategoryInfo(context.Context, *CategoryInfoRequest) (*CategoryInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryInfo not implemented")
+}
+func (UnimplementedArticleServer) CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryAdd not implemented")
+}
+func (UnimplementedArticleServer) CategoryUpdate(context.Context, *CategoryUpdateRequest) (*CategoryUpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryUpdate not implemented")
+}
+func (UnimplementedArticleServer) CategoryDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryDelete not implemented")
+}
+func (UnimplementedArticleServer) CategoryForceDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryForceDelete not implemented")
+}
+func (UnimplementedArticleServer) CategoryUpdateField(context.Context, *CategoryUpdateFieldRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CategoryUpdateField not implemented")
 }
 func (UnimplementedArticleServer) mustEmbedUnimplementedArticleServer() {}
 
@@ -329,6 +425,114 @@ func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Article_CategoryInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryInfo(ctx, req.(*CategoryInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_CategoryAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryAddRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryAdd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryAdd",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryAdd(ctx, req.(*CategoryAddRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_CategoryUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryUpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryUpdate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryUpdate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryUpdate(ctx, req.(*CategoryUpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_CategoryDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryDelete(ctx, req.(*CategoryDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_CategoryForceDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryForceDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryForceDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryForceDelete(ctx, req.(*CategoryDeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_CategoryUpdateField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CategoryUpdateFieldRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).CategoryUpdateField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/CategoryUpdateField",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).CategoryUpdateField(ctx, req.(*CategoryUpdateFieldRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Article_ServiceDesc is the grpc.ServiceDesc for Article service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -367,6 +571,30 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CategoryList",
 			Handler:    _Article_CategoryList_Handler,
+		},
+		{
+			MethodName: "CategoryInfo",
+			Handler:    _Article_CategoryInfo_Handler,
+		},
+		{
+			MethodName: "CategoryAdd",
+			Handler:    _Article_CategoryAdd_Handler,
+		},
+		{
+			MethodName: "CategoryUpdate",
+			Handler:    _Article_CategoryUpdate_Handler,
+		},
+		{
+			MethodName: "CategoryDelete",
+			Handler:    _Article_CategoryDelete_Handler,
+		},
+		{
+			MethodName: "CategoryForceDelete",
+			Handler:    _Article_CategoryForceDelete_Handler,
+		},
+		{
+			MethodName: "CategoryUpdateField",
+			Handler:    _Article_CategoryUpdateField_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -127,3 +127,12 @@ func IsDataUpdateFieldError(err error) bool {
 func ErrorDataUpdateFieldError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_UPDATE_FIELD_ERROR.String(), fmt.Sprintf(format, args...))
 }
+
+func IsArticleInCategoryError(err error) bool {
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ARTICLE_IN_CATEGORY_ERROR.String() && e.Code == 400
+}
+
+func ErrorArticleInCategoryError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ARTICLE_IN_CATEGORY_ERROR.String(), fmt.Sprintf(format, args...))
+}

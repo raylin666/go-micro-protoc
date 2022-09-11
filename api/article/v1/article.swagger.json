@@ -49,6 +49,132 @@
         ]
       }
     },
+    "/article/category/add": {
+      "put": {
+        "summary": "新增文章分类",
+        "operationId": "Article_CategoryAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CategoryAddResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CategoryAddRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/category/delete/{id}": {
+      "delete": {
+        "summary": "删除文章分类",
+        "operationId": "Article_CategoryDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/category/force_delete/{id}": {
+      "delete": {
+        "summary": "强制删除文章分类",
+        "operationId": "Article_CategoryForceDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/category/info/{id}": {
+      "get": {
+        "summary": "文章分类详情",
+        "operationId": "Article_CategoryInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CategoryInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
     "/article/category/list": {
       "get": {
         "summary": "文章分类列表",
@@ -67,6 +193,112 @@
             }
           }
         },
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/category/update/{id}": {
+      "post": {
+        "summary": "更新文章分类",
+        "operationId": "Article_CategoryUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CategoryUpdateResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "sort": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "status": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Article"
+        ]
+      }
+    },
+    "/article/category/update_field/{id}/{field}": {
+      "post": {
+        "summary": "更新文章分类字段属性",
+        "operationId": "Article_CategoryUpdateField",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "field",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "tags": [
           "Article"
         ]
@@ -576,6 +808,71 @@
         }
       }
     },
+    "v1CategoryAddRequest": {
+      "type": "object",
+      "properties": {
+        "pid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1CategoryAddResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CategoryInfoResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "pid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "created_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "updated_at": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "article_count": {
+          "type": "string"
+        }
+      }
+    },
     "v1CategoryListResponse": {
       "type": "object",
       "properties": {
@@ -588,6 +885,14 @@
         "count": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "v1CategoryUpdateResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         }
       }
     },
