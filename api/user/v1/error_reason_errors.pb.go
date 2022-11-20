@@ -11,272 +11,212 @@ import (
 // is compatible with the kratos package it is being compiled against.
 const _ = errors.SupportPackageIsVersion1
 
+// 未知错误
+func IsUnknownError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_UNKNOWN_ERROR.String() && e.Code == 500
+}
+
+// 未知错误
+func ErrorUnknownError(format string, args ...interface{}) *errors.Error {
+	return errors.New(500, ErrorReason_UNKNOWN_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 服务异常
 func IsServerError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_SERVER_ERROR.String() && e.Code == 500
 }
 
+// 服务异常
 func ErrorServerError(format string, args ...interface{}) *errors.Error {
 	return errors.New(500, ErrorReason_SERVER_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+// 数据校验失败
 func IsDataValidateError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_VALIDATE_ERROR.String() && e.Code == 422
 }
 
+// 数据校验失败
 func ErrorDataValidateError(format string, args ...interface{}) *errors.Error {
 	return errors.New(422, ErrorReason_DATA_VALIDATE_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+// 数据查询失败
 func IsDataSelectError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_SELECT_ERROR.String() && e.Code == 400
 }
 
+// 数据查询失败
 func ErrorDataSelectError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_SELECT_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+// 数据已存在
 func IsDataAlreadyExists(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_ALREADY_EXISTS.String() && e.Code == 400
 }
 
+// 数据已存在
 func ErrorDataAlreadyExists(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_ALREADY_EXISTS.String(), fmt.Sprintf(format, args...))
 }
 
+// 数据不存在
 func IsDataNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_NOT_FOUND.String() && e.Code == 400
 }
 
+// 数据不存在
 func ErrorDataNotFound(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }
 
-func IsNotLoginError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_NOT_LOGIN_ERROR.String() && e.Code == 401
-}
-
-func ErrorNotLoginError(format string, args ...interface{}) *errors.Error {
-	return errors.New(401, ErrorReason_NOT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
+// 新增数据失败
 func IsDataAddError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_ADD_ERROR.String() && e.Code == 400
 }
 
+// 新增数据失败
 func ErrorDataAddError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_ADD_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+// 更新数据失败
 func IsDataUpdateError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_UPDATE_ERROR.String() && e.Code == 400
 }
 
+// 更新数据失败
 func ErrorDataUpdateError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_UPDATE_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsIdInvalidValueError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ID_INVALID_VALUE_ERROR.String() && e.Code == 400
-}
-
-func ErrorIdInvalidValueError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ID_INVALID_VALUE_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
+// 数据删除失败
 func IsDataDeleteError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_DELETE_ERROR.String() && e.Code == 400
 }
 
+// 数据删除失败
 func ErrorDataDeleteError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_DELETE_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+// 数据资源不存在
 func IsDataResourceNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_RESOURCE_NOT_FOUND.String() && e.Code == 400
 }
 
+// 数据资源不存在
 func ErrorDataResourceNotFound(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_RESOURCE_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }
 
-func IsCommandInvalidNotFound(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_COMMAND_INVALID_NOT_FOUND.String() && e.Code == 400
-}
-
-func ErrorCommandInvalidNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_COMMAND_INVALID_NOT_FOUND.String(), fmt.Sprintf(format, args...))
-}
-
+// 数据属性更新失败
 func IsDataUpdateFieldError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == ErrorReason_DATA_UPDATE_FIELD_ERROR.String() && e.Code == 400
 }
 
+// 数据属性更新失败
 func ErrorDataUpdateFieldError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, ErrorReason_DATA_UPDATE_FIELD_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountNotFound(err error) bool {
+// 无效ID值
+func IsIdInvalidValueError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_NOT_FOUND.String() && e.Code == 404
+	return e.Reason == ErrorReason_ID_INVALID_VALUE_ERROR.String() && e.Code == 400
 }
 
-func ErrorAccountNotFound(format string, args ...interface{}) *errors.Error {
-	return errors.New(404, ErrorReason_ACCOUNT_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+// 无效ID值
+func ErrorIdInvalidValueError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ID_INVALID_VALUE_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountOrPasswordError(err error) bool {
+// 无效的执行指令
+func IsCommandInvalidNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_COMMAND_INVALID_NOT_FOUND.String() && e.Code == 400
 }
 
-func ErrorAccountOrPasswordError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String(), fmt.Sprintf(format, args...))
+// 无效的执行指令
+func ErrorCommandInvalidNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_COMMAND_INVALID_NOT_FOUND.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountLoginError(err error) bool {
+// 请先登录后再操作
+func IsNotLoginError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_LOGIN_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_NOT_LOGIN_ERROR.String() && e.Code == 401
 }
 
-func ErrorAccountLoginError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
+// 请先登录后再操作
+func ErrorNotLoginError(format string, args ...interface{}) *errors.Error {
+	return errors.New(401, ErrorReason_NOT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
-func IsAccountFreezeError(err error) bool {
+// 没有访问权限
+func IsNotVisitAuth(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_FREEZE_ERROR.String() && e.Code == 400
+	return e.Reason == ErrorReason_NOT_VISIT_AUTH.String() && e.Code == 401
 }
 
-func ErrorAccountFreezeError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_FREEZE_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAccountPermissionError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_PERMISSION_ERROR.String() && e.Code == 401
-}
-
-func ErrorAccountPermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(401, ErrorReason_ACCOUNT_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAccountMenuListError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_ACCOUNT_MENU_LIST_ERROR.String() && e.Code == 400
-}
-
-func ErrorAccountMenuListError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_ACCOUNT_MENU_LIST_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlUserAddRoleError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlUserAddRoleError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlDeleteUserRoleError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlDeleteUserRoleError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlDeleteUserRolesError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlDeleteUserRolesError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlGetError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_GET_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlGetError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlDeleteUserError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlDeleteUserError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlDeleteRoleError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlDeleteRoleError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlDeletePermissionError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlDeletePermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlUserAddPermissionError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlUserAddPermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlUserDeletePermissionError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlUserDeletePermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlUserDeletePermissionsError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlUserDeletePermissionsError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String(), fmt.Sprintf(format, args...))
-}
-
-func IsAuthControlGetUserPermissionError(err error) bool {
-	e := errors.FromError(err)
-	return e.Reason == ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String() && e.Code == 400
-}
-
-func ErrorAuthControlGetUserPermissionError(format string, args ...interface{}) *errors.Error {
-	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+// 没有访问权限
+func ErrorNotVisitAuth(format string, args ...interface{}) *errors.Error {
+	return errors.New(401, ErrorReason_NOT_VISIT_AUTH.String(), fmt.Sprintf(format, args...))
 }

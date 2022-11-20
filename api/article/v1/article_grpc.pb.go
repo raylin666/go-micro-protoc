@@ -38,7 +38,7 @@ type ArticleClient interface {
 	// 更新文章字段属性
 	UpdateField(ctx context.Context, in *UpdateFieldRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 文章分类列表
-	CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error)
+	CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error)
 	// 文章分类详情
 	CategoryInfo(ctx context.Context, in *CategoryInfoRequest, opts ...grpc.CallOption) (*CategoryInfoResponse, error)
 	// 新增文章分类
@@ -124,7 +124,7 @@ func (c *articleClient) UpdateField(ctx context.Context, in *UpdateFieldRequest,
 	return out, nil
 }
 
-func (c *articleClient) CategoryList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*CategoryListResponse, error) {
+func (c *articleClient) CategoryList(ctx context.Context, in *CategoryListRequest, opts ...grpc.CallOption) (*CategoryListResponse, error) {
 	out := new(CategoryListResponse)
 	err := c.cc.Invoke(ctx, "/article.v1.Article/CategoryList", in, out, opts...)
 	if err != nil {
@@ -206,7 +206,7 @@ type ArticleServer interface {
 	// 更新文章字段属性
 	UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error)
 	// 文章分类列表
-	CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error)
+	CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error)
 	// 文章分类详情
 	CategoryInfo(context.Context, *CategoryInfoRequest) (*CategoryInfoResponse, error)
 	// 新增文章分类
@@ -247,7 +247,7 @@ func (UnimplementedArticleServer) ForceDelete(context.Context, *DeleteRequest) (
 func (UnimplementedArticleServer) UpdateField(context.Context, *UpdateFieldRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateField not implemented")
 }
-func (UnimplementedArticleServer) CategoryList(context.Context, *emptypb.Empty) (*CategoryListResponse, error) {
+func (UnimplementedArticleServer) CategoryList(context.Context, *CategoryListRequest) (*CategoryListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CategoryList not implemented")
 }
 func (UnimplementedArticleServer) CategoryInfo(context.Context, *CategoryInfoRequest) (*CategoryInfoResponse, error) {
@@ -408,7 +408,7 @@ func _Article_UpdateField_Handler(srv interface{}, ctx context.Context, dec func
 }
 
 func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(CategoryListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -420,7 +420,7 @@ func _Article_CategoryList_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/article.v1.Article/CategoryList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArticleServer).CategoryList(ctx, req.(*emptypb.Empty))
+		return srv.(ArticleServer).CategoryList(ctx, req.(*CategoryListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

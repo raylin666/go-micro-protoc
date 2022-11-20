@@ -27,12 +27,8 @@ type AccountClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	// 账号登出
 	Logout(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// 获取账号基础信息
-	GetBasicInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBasicInfoResponse, error)
 	// 获取账号信息
 	GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetInfoResponse, error)
-	// 获取账号菜单列表
-	GetMenuList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMenuListResponse, error)
 }
 
 type accountClient struct {
@@ -61,27 +57,9 @@ func (c *accountClient) Logout(ctx context.Context, in *emptypb.Empty, opts ...g
 	return out, nil
 }
 
-func (c *accountClient) GetBasicInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBasicInfoResponse, error) {
-	out := new(GetBasicInfoResponse)
-	err := c.cc.Invoke(ctx, "/user.v1.Account/GetBasicInfo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *accountClient) GetInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetInfoResponse, error) {
 	out := new(GetInfoResponse)
 	err := c.cc.Invoke(ctx, "/user.v1.Account/GetInfo", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *accountClient) GetMenuList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMenuListResponse, error) {
-	out := new(GetMenuListResponse)
-	err := c.cc.Invoke(ctx, "/user.v1.Account/GetMenuList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,12 +74,8 @@ type AccountServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	// 账号登出
 	Logout(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
-	// 获取账号基础信息
-	GetBasicInfo(context.Context, *emptypb.Empty) (*GetBasicInfoResponse, error)
 	// 获取账号信息
 	GetInfo(context.Context, *emptypb.Empty) (*GetInfoResponse, error)
-	// 获取账号菜单列表
-	GetMenuList(context.Context, *emptypb.Empty) (*GetMenuListResponse, error)
 	mustEmbedUnimplementedAccountServer()
 }
 
@@ -115,14 +89,8 @@ func (UnimplementedAccountServer) Login(context.Context, *LoginRequest) (*LoginR
 func (UnimplementedAccountServer) Logout(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedAccountServer) GetBasicInfo(context.Context, *emptypb.Empty) (*GetBasicInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBasicInfo not implemented")
-}
 func (UnimplementedAccountServer) GetInfo(context.Context, *emptypb.Empty) (*GetInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfo not implemented")
-}
-func (UnimplementedAccountServer) GetMenuList(context.Context, *emptypb.Empty) (*GetMenuListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMenuList not implemented")
 }
 func (UnimplementedAccountServer) mustEmbedUnimplementedAccountServer() {}
 
@@ -173,24 +141,6 @@ func _Account_Logout_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Account_GetBasicInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServer).GetBasicInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user.v1.Account/GetBasicInfo",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetBasicInfo(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Account_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -205,24 +155,6 @@ func _Account_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AccountServer).GetInfo(ctx, req.(*emptypb.Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Account_GetMenuList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AccountServer).GetMenuList(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user.v1.Account/GetMenuList",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountServer).GetMenuList(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -243,16 +175,8 @@ var Account_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Account_Logout_Handler,
 		},
 		{
-			MethodName: "GetBasicInfo",
-			Handler:    _Account_GetBasicInfo_Handler,
-		},
-		{
 			MethodName: "GetInfo",
 			Handler:    _Account_GetInfo_Handler,
-		},
-		{
-			MethodName: "GetMenuList",
-			Handler:    _Account_GetMenuList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

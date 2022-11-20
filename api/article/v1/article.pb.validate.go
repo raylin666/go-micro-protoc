@@ -1653,6 +1653,110 @@ var _UpdateFieldRequest_Field_InLookup = map[string]struct{}{
 	"status":         {},
 }
 
+// Validate checks the field values on CategoryListRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CategoryListRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CategoryListRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CategoryListRequestMultiError, or nil if none found.
+func (m *CategoryListRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CategoryListRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Status
+
+	if len(errors) > 0 {
+		return CategoryListRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// CategoryListRequestMultiError is an error wrapping multiple validation
+// errors returned by CategoryListRequest.ValidateAll() if the designated
+// constraints aren't met.
+type CategoryListRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CategoryListRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CategoryListRequestMultiError) AllErrors() []error { return m }
+
+// CategoryListRequestValidationError is the validation error returned by
+// CategoryListRequest.Validate if the designated constraints aren't met.
+type CategoryListRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CategoryListRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CategoryListRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CategoryListRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CategoryListRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CategoryListRequestValidationError) ErrorName() string {
+	return "CategoryListRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CategoryListRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCategoryListRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CategoryListRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CategoryListRequestValidationError{}
+
 // Validate checks the field values on CategoryListResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1820,6 +1924,12 @@ func (m *ArticleCategoryList) validate(all bool) error {
 	// no validation rules for Name
 
 	// no validation rules for Sort
+
+	// no validation rules for Status
+
+	// no validation rules for CreatedAt
+
+	// no validation rules for UpdatedAt
 
 	// no validation rules for ArticleCount
 

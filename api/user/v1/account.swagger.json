@@ -16,29 +16,6 @@
     "application/json"
   ],
   "paths": {
-    "/account/basic_info": {
-      "get": {
-        "summary": "获取账号基础信息",
-        "operationId": "Account_GetBasicInfo",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetBasicInfoResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "Account"
-        ]
-      }
-    },
     "/account/info": {
       "get": {
         "summary": "获取账号信息",
@@ -103,6 +80,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
+              "type": "object",
               "properties": {}
             }
           },
@@ -119,33 +97,11 @@
             "in": "body",
             "required": true,
             "schema": {
+              "type": "object",
               "properties": {}
             }
           }
         ],
-        "tags": [
-          "Account"
-        ]
-      }
-    },
-    "/account/menu_list": {
-      "get": {
-        "summary": "获取账号菜单列表",
-        "operationId": "Account_GetMenuList",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetMenuListResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
         "tags": [
           "Account"
         ]
@@ -177,63 +133,6 @@
           "items": {
             "$ref": "#/definitions/protobufAny"
           }
-        }
-      }
-    },
-    "v1GetBasicInfoResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        },
-        "real_username": {
-          "type": "string"
-        },
-        "sex": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "birthday_at": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "phone_area": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "last_login_ip": {
-          "type": "string"
-        },
-        "status": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "first_login_at": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "last_login_at": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "created_at": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "updated_at": {
-          "type": "integer",
-          "format": "int64"
         }
       }
     },
@@ -291,20 +190,6 @@
         "updated_at": {
           "type": "integer",
           "format": "int64"
-        },
-        "role": {
-          "$ref": "#/definitions/v1Role"
-        }
-      }
-    },
-    "v1GetMenuListResponse": {
-      "type": "object",
-      "properties": {
-        "list": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1MenuList"
-          }
         }
       }
     },
@@ -331,75 +216,6 @@
         "expire_at": {
           "type": "integer",
           "format": "int64"
-        }
-      }
-    },
-    "v1MenuList": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "component": {
-          "type": "string"
-        },
-        "meta": {
-          "type": "string"
-        },
-        "redirect": {
-          "type": "string"
-        },
-        "pid": {
-          "type": "string"
-        }
-      }
-    },
-    "v1Permission": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "permissions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Permission"
-          }
-        }
-      }
-    },
-    "v1Role": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "desc": {
-          "type": "string"
-        },
-        "permissions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Permission"
-          }
         }
       }
     }

@@ -1,4 +1,4 @@
-# 微服务 (GO-MICRO) 项目 Proto 文件管理
+# 微服务 (Micro Server API) 项目 ProtoBuf 文件管理
 
 本项目依赖于B站开源的 `kratos` 框架, 目前服务有:
 

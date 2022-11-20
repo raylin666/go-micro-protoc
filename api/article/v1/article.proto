@@ -66,7 +66,7 @@ service Article {
   }
 
   // 文章分类列表
-  rpc CategoryList (google.protobuf.Empty) returns (CategoryListResponse) {
+  rpc CategoryList (CategoryListRequest) returns (CategoryListResponse) {
     option (google.api.http) = {
       get: "/article/category/list"
     };
@@ -248,6 +248,10 @@ message UpdateFieldRequest {
   string value = 3;
 }
 
+message CategoryListRequest {
+  int32 status = 1;
+}
+
 message CategoryListResponse {
   repeated ArticleCategoryList list = 1;
   int32 count = 2;
@@ -258,7 +262,10 @@ message ArticleCategoryList {
   string pid = 2;
   string name = 3;
   int32 sort = 4;
-  string article_count = 5;
+  int32 status = 5;
+  uint32 created_at = 6;
+  uint32 updated_at = 7;
+  string article_count = 8;
 }
 
 message CategoryInfoRequest {
