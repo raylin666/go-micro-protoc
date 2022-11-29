@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GenerateResponse"
+              "$ref": "#/definitions/v1GenerateUuidResponse"
             }
           },
           "default": {
@@ -40,7 +40,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1GenerateRequest"
+              "$ref": "#/definitions/v1GenerateUuidRequest"
             }
           }
         ],
@@ -78,7 +78,7 @@
         }
       }
     },
-    "v1GenerateRequest": {
+    "v1GenerateUuidRequest": {
       "type": "object",
       "properties": {
         "type": {
@@ -87,7 +87,7 @@
         }
       }
     },
-    "v1GenerateResponse": {
+    "v1GenerateUuidResponse": {
       "type": "object",
       "properties": {
         "value": {

@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UuidClient interface {
 	// 生成唯一标识
-	Generate(ctx context.Context, in *GenerateRequest, opts ...grpc.CallOption) (*GenerateResponse, error)
+	Generate(ctx context.Context, in *GenerateUuidRequest, opts ...grpc.CallOption) (*GenerateUuidResponse, error)
 }
 
 type uuidClient struct {
@@ -34,8 +34,8 @@ func NewUuidClient(cc grpc.ClientConnInterface) UuidClient {
 	return &uuidClient{cc}
 }
 
-func (c *uuidClient) Generate(ctx context.Context, in *GenerateRequest, opts ...grpc.CallOption) (*GenerateResponse, error) {
-	out := new(GenerateResponse)
+func (c *uuidClient) Generate(ctx context.Context, in *GenerateUuidRequest, opts ...grpc.CallOption) (*GenerateUuidResponse, error) {
+	out := new(GenerateUuidResponse)
 	err := c.cc.Invoke(ctx, "/basic.v1.Uuid/Generate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (c *uuidClient) Generate(ctx context.Context, in *GenerateRequest, opts ...
 // for forward compatibility
 type UuidServer interface {
 	// 生成唯一标识
-	Generate(context.Context, *GenerateRequest) (*GenerateResponse, error)
+	Generate(context.Context, *GenerateUuidRequest) (*GenerateUuidResponse, error)
 	mustEmbedUnimplementedUuidServer()
 }
 
@@ -56,7 +56,7 @@ type UuidServer interface {
 type UnimplementedUuidServer struct {
 }
 
-func (UnimplementedUuidServer) Generate(context.Context, *GenerateRequest) (*GenerateResponse, error) {
+func (UnimplementedUuidServer) Generate(context.Context, *GenerateUuidRequest) (*GenerateUuidResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Generate not implemented")
 }
 func (UnimplementedUuidServer) mustEmbedUnimplementedUuidServer() {}
@@ -73,7 +73,7 @@ func RegisterUuidServer(s grpc.ServiceRegistrar, srv UuidServer) {
 }
 
 func _Uuid_Generate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateRequest)
+	in := new(GenerateUuidRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func _Uuid_Generate_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/basic.v1.Uuid/Generate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UuidServer).Generate(ctx, req.(*GenerateRequest))
+		return srv.(UuidServer).Generate(ctx, req.(*GenerateUuidRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

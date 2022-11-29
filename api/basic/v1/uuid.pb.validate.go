@@ -35,22 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on GenerateRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *GenerateRequest) Validate() error {
+// Validate checks the field values on GenerateUuidRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GenerateUuidRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GenerateRequest with the rules
+// ValidateAll checks the field values on GenerateUuidRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GenerateRequestMultiError, or nil if none found.
-func (m *GenerateRequest) ValidateAll() error {
+// GenerateUuidRequestMultiError, or nil if none found.
+func (m *GenerateUuidRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GenerateRequest) validate(all bool) error {
+func (m *GenerateUuidRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -60,19 +60,19 @@ func (m *GenerateRequest) validate(all bool) error {
 	// no validation rules for Type
 
 	if len(errors) > 0 {
-		return GenerateRequestMultiError(errors)
+		return GenerateUuidRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// GenerateRequestMultiError is an error wrapping multiple validation errors
-// returned by GenerateRequest.ValidateAll() if the designated constraints
-// aren't met.
-type GenerateRequestMultiError []error
+// GenerateUuidRequestMultiError is an error wrapping multiple validation
+// errors returned by GenerateUuidRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GenerateUuidRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GenerateRequestMultiError) Error() string {
+func (m GenerateUuidRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -81,11 +81,11 @@ func (m GenerateRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GenerateRequestMultiError) AllErrors() []error { return m }
+func (m GenerateUuidRequestMultiError) AllErrors() []error { return m }
 
-// GenerateRequestValidationError is the validation error returned by
-// GenerateRequest.Validate if the designated constraints aren't met.
-type GenerateRequestValidationError struct {
+// GenerateUuidRequestValidationError is the validation error returned by
+// GenerateUuidRequest.Validate if the designated constraints aren't met.
+type GenerateUuidRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -93,22 +93,24 @@ type GenerateRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GenerateRequestValidationError) Field() string { return e.field }
+func (e GenerateUuidRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GenerateRequestValidationError) Reason() string { return e.reason }
+func (e GenerateUuidRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GenerateRequestValidationError) Cause() error { return e.cause }
+func (e GenerateUuidRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GenerateRequestValidationError) Key() bool { return e.key }
+func (e GenerateUuidRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GenerateRequestValidationError) ErrorName() string { return "GenerateRequestValidationError" }
+func (e GenerateUuidRequestValidationError) ErrorName() string {
+	return "GenerateUuidRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e GenerateRequestValidationError) Error() string {
+func (e GenerateUuidRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -120,14 +122,14 @@ func (e GenerateRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGenerateRequest.%s: %s%s",
+		"invalid %sGenerateUuidRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GenerateRequestValidationError{}
+var _ error = GenerateUuidRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -135,24 +137,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GenerateRequestValidationError{}
+} = GenerateUuidRequestValidationError{}
 
-// Validate checks the field values on GenerateResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *GenerateResponse) Validate() error {
+// Validate checks the field values on GenerateUuidResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GenerateUuidResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GenerateResponse with the rules
+// ValidateAll checks the field values on GenerateUuidResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GenerateResponseMultiError, or nil if none found.
-func (m *GenerateResponse) ValidateAll() error {
+// GenerateUuidResponseMultiError, or nil if none found.
+func (m *GenerateUuidResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GenerateResponse) validate(all bool) error {
+func (m *GenerateUuidResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -162,19 +164,19 @@ func (m *GenerateResponse) validate(all bool) error {
 	// no validation rules for Value
 
 	if len(errors) > 0 {
-		return GenerateResponseMultiError(errors)
+		return GenerateUuidResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GenerateResponseMultiError is an error wrapping multiple validation errors
-// returned by GenerateResponse.ValidateAll() if the designated constraints
-// aren't met.
-type GenerateResponseMultiError []error
+// GenerateUuidResponseMultiError is an error wrapping multiple validation
+// errors returned by GenerateUuidResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GenerateUuidResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GenerateResponseMultiError) Error() string {
+func (m GenerateUuidResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -183,11 +185,11 @@ func (m GenerateResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GenerateResponseMultiError) AllErrors() []error { return m }
+func (m GenerateUuidResponseMultiError) AllErrors() []error { return m }
 
-// GenerateResponseValidationError is the validation error returned by
-// GenerateResponse.Validate if the designated constraints aren't met.
-type GenerateResponseValidationError struct {
+// GenerateUuidResponseValidationError is the validation error returned by
+// GenerateUuidResponse.Validate if the designated constraints aren't met.
+type GenerateUuidResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -195,22 +197,24 @@ type GenerateResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GenerateResponseValidationError) Field() string { return e.field }
+func (e GenerateUuidResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GenerateResponseValidationError) Reason() string { return e.reason }
+func (e GenerateUuidResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GenerateResponseValidationError) Cause() error { return e.cause }
+func (e GenerateUuidResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GenerateResponseValidationError) Key() bool { return e.key }
+func (e GenerateUuidResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GenerateResponseValidationError) ErrorName() string { return "GenerateResponseValidationError" }
+func (e GenerateUuidResponseValidationError) ErrorName() string {
+	return "GenerateUuidResponseValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e GenerateResponseValidationError) Error() string {
+func (e GenerateUuidResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -222,14 +226,14 @@ func (e GenerateResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGenerateResponse.%s: %s%s",
+		"invalid %sGenerateUuidResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GenerateResponseValidationError{}
+var _ error = GenerateUuidResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -237,4 +241,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GenerateResponseValidationError{}
+} = GenerateUuidResponseValidationError{}

@@ -425,7 +425,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/basic.v1.GenerateRequest'
+                            $ref: '#/components/schemas/basic.v1.GenerateUuidRequest'
                 required: true
             responses:
                 "200":
@@ -433,7 +433,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/basic.v1.GenerateResponse'
+                                $ref: '#/components/schemas/basic.v1.GenerateUuidResponse'
 components:
     schemas:
         article.v1.AddRequest:
@@ -804,17 +804,6 @@ components:
             properties:
                 id:
                     type: string
-        basic.v1.GenerateRequest:
-            type: object
-            properties:
-                type:
-                    type: string
-                    description: '*default: 随机UUIDtime_rand: 时间随机值'
-        basic.v1.GenerateResponse:
-            type: object
-            properties:
-                value:
-                    type: string
         basic.v1.GenerateShortUrlRequest:
             type: object
             properties:
@@ -824,6 +813,17 @@ components:
             type: object
             properties:
                 url:
+                    type: string
+        basic.v1.GenerateUuidRequest:
+            type: object
+            properties:
+                type:
+                    type: string
+                    description: '*default: 随机UUIDtime_rand: 时间随机值'
+        basic.v1.GenerateUuidResponse:
+            type: object
+            properties:
+                value:
                     type: string
         basic.v1.StreamUploadFileRequest:
             type: object

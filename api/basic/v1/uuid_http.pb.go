@@ -22,7 +22,7 @@ const _ = http.SupportPackageIsVersion1
 const OperationUuidGenerate = "/basic.v1.Uuid/Generate"
 
 type UuidHTTPServer interface {
-	Generate(context.Context, *GenerateRequest) (*GenerateResponse, error)
+	Generate(context.Context, *GenerateUuidRequest) (*GenerateUuidResponse, error)
 }
 
 func RegisterUuidHTTPServer(s *http.Server, srv UuidHTTPServer) {
@@ -32,25 +32,25 @@ func RegisterUuidHTTPServer(s *http.Server, srv UuidHTTPServer) {
 
 func _Uuid_Generate0_HTTP_Handler(srv UuidHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in GenerateRequest
+		var in GenerateUuidRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, OperationUuidGenerate)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Generate(ctx, req.(*GenerateRequest))
+			return srv.Generate(ctx, req.(*GenerateUuidRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*GenerateResponse)
+		reply := out.(*GenerateUuidResponse)
 		return ctx.Result(200, reply)
 	}
 }
 
 type UuidHTTPClient interface {
-	Generate(ctx context.Context, req *GenerateRequest, opts ...http.CallOption) (rsp *GenerateResponse, err error)
+	Generate(ctx context.Context, req *GenerateUuidRequest, opts ...http.CallOption) (rsp *GenerateUuidResponse, err error)
 }
 
 type UuidHTTPClientImpl struct {
@@ -61,8 +61,8 @@ func NewUuidHTTPClient(client *http.Client) UuidHTTPClient {
 	return &UuidHTTPClientImpl{client}
 }
 
-func (c *UuidHTTPClientImpl) Generate(ctx context.Context, in *GenerateRequest, opts ...http.CallOption) (*GenerateResponse, error) {
-	var out GenerateResponse
+func (c *UuidHTTPClientImpl) Generate(ctx context.Context, in *GenerateUuidRequest, opts ...http.CallOption) (*GenerateUuidResponse, error) {
+	var out GenerateUuidResponse
 	pattern := "/uuid/generate"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationUuidGenerate))
