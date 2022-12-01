@@ -871,7 +871,7 @@
     "v1BatchDeleteRequest": {
       "type": "object",
       "properties": {
-        "id": {
+        "ids": {
           "type": "array",
           "items": {
             "type": "string"
@@ -882,7 +882,7 @@
     "v1BatchDeleteResponse": {
       "type": "object",
       "properties": {
-        "id": {
+        "ids": {
           "type": "array",
           "items": {
             "type": "string"

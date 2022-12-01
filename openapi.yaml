@@ -595,14 +595,14 @@ components:
         article.v1.BatchDeleteRequest:
             type: object
             properties:
-                id:
+                ids:
                     type: array
                     items:
                         type: string
         article.v1.BatchDeleteResponse:
             type: object
             properties:
-                id:
+                ids:
                     type: array
                     items:
                         type: string
