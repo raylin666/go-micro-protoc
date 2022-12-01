@@ -33,6 +33,8 @@ type ArticleClient interface {
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 	// 删除文章
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// 批量删除文章
+	BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*BatchDeleteResponse, error)
 	// 强制删除文章
 	ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 更新文章字段属性
@@ -100,6 +102,15 @@ func (c *articleClient) Update(ctx context.Context, in *UpdateRequest, opts ...g
 func (c *articleClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/article.v1.Article/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleClient) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*BatchDeleteResponse, error) {
+	out := new(BatchDeleteResponse)
+	err := c.cc.Invoke(ctx, "/article.v1.Article/BatchDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +212,8 @@ type ArticleServer interface {
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 	// 删除文章
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
+	// 批量删除文章
+	BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error)
 	// 强制删除文章
 	ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	// 更新文章字段属性
@@ -240,6 +253,9 @@ func (UnimplementedArticleServer) Update(context.Context, *UpdateRequest) (*Upda
 }
 func (UnimplementedArticleServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedArticleServer) BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchDelete not implemented")
 }
 func (UnimplementedArticleServer) ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForceDelete not implemented")
@@ -367,6 +383,24 @@ func _Article_Delete_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ArticleServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Article_BatchDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchDeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ArticleServer).BatchDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/article.v1.Article/BatchDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ArticleServer).BatchDelete(ctx, req.(*BatchDeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -559,6 +593,10 @@ var Article_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _Article_Delete_Handler,
+		},
+		{
+			MethodName: "BatchDelete",
+			Handler:    _Article_BatchDelete_Handler,
 		},
 		{
 			MethodName: "ForceDelete",

@@ -21,6 +21,7 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationArticleAdd = "/article.v1.Article/Add"
+const OperationArticleBatchDelete = "/article.v1.Article/BatchDelete"
 const OperationArticleCategoryAdd = "/article.v1.Article/CategoryAdd"
 const OperationArticleCategoryDelete = "/article.v1.Article/CategoryDelete"
 const OperationArticleCategoryForceDelete = "/article.v1.Article/CategoryForceDelete"
@@ -37,6 +38,7 @@ const OperationArticleUpdateField = "/article.v1.Article/UpdateField"
 
 type ArticleHTTPServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
+	BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error)
 	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
 	CategoryDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
 	CategoryForceDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
@@ -59,6 +61,7 @@ func RegisterArticleHTTPServer(s *http.Server, srv ArticleHTTPServer) {
 	r.PUT("/article/add", _Article_Add0_HTTP_Handler(srv))
 	r.POST("/article/update/{id}", _Article_Update0_HTTP_Handler(srv))
 	r.DELETE("/article/delete/{id}", _Article_Delete0_HTTP_Handler(srv))
+	r.POST("/article/batch_delete", _Article_BatchDelete0_HTTP_Handler(srv))
 	r.DELETE("/article/force_delete/{id}", _Article_ForceDelete0_HTTP_Handler(srv))
 	r.POST("/article/update_field/{id}/{field}", _Article_UpdateField0_HTTP_Handler(srv))
 	r.GET("/article/category/list", _Article_CategoryList0_HTTP_Handler(srv))
@@ -170,6 +173,25 @@ func _Article_Delete0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context)
 			return err
 		}
 		reply := out.(*emptypb.Empty)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _Article_BatchDelete0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in BatchDeleteRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationArticleBatchDelete)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.BatchDelete(ctx, req.(*BatchDeleteRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*BatchDeleteResponse)
 		return ctx.Result(200, reply)
 	}
 }
@@ -368,6 +390,7 @@ func _Article_CategoryUpdateField0_HTTP_Handler(srv ArticleHTTPServer) func(ctx 
 
 type ArticleHTTPClient interface {
 	Add(ctx context.Context, req *AddRequest, opts ...http.CallOption) (rsp *AddResponse, err error)
+	BatchDelete(ctx context.Context, req *BatchDeleteRequest, opts ...http.CallOption) (rsp *BatchDeleteResponse, err error)
 	CategoryAdd(ctx context.Context, req *CategoryAddRequest, opts ...http.CallOption) (rsp *CategoryAddResponse, err error)
 	CategoryDelete(ctx context.Context, req *CategoryDeleteRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	CategoryForceDelete(ctx context.Context, req *CategoryDeleteRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
@@ -398,6 +421,19 @@ func (c *ArticleHTTPClientImpl) Add(ctx context.Context, in *AddRequest, opts ..
 	opts = append(opts, http.Operation(OperationArticleAdd))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "PUT", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, err
+}
+
+func (c *ArticleHTTPClientImpl) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...http.CallOption) (*BatchDeleteResponse, error) {
+	var out BatchDeleteResponse
+	pattern := "/article/batch_delete"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationArticleBatchDelete))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

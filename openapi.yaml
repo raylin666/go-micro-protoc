@@ -71,6 +71,25 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/article.v1.AddResponse'
+    /article/batch_delete:
+        post:
+            tags:
+                - Article
+            description: 批量删除文章
+            operationId: Article_BatchDelete
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/article.v1.BatchDeleteRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/article.v1.BatchDeleteResponse'
     /article/category/add:
         put:
             tags:
@@ -573,6 +592,20 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/article.v1.ArticleCategory'
+        article.v1.BatchDeleteRequest:
+            type: object
+            properties:
+                id:
+                    type: array
+                    items:
+                        type: string
+        article.v1.BatchDeleteResponse:
+            type: object
+            properties:
+                id:
+                    type: array
+                    items:
+                        type: string
         article.v1.CategoryAddRequest:
             type: object
             properties:

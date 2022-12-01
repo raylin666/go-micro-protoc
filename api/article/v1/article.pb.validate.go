@@ -1529,6 +1529,210 @@ var _ interface {
 	ErrorName() string
 } = DeleteRequestValidationError{}
 
+// Validate checks the field values on BatchDeleteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *BatchDeleteRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BatchDeleteRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// BatchDeleteRequestMultiError, or nil if none found.
+func (m *BatchDeleteRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BatchDeleteRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return BatchDeleteRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// BatchDeleteRequestMultiError is an error wrapping multiple validation errors
+// returned by BatchDeleteRequest.ValidateAll() if the designated constraints
+// aren't met.
+type BatchDeleteRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BatchDeleteRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BatchDeleteRequestMultiError) AllErrors() []error { return m }
+
+// BatchDeleteRequestValidationError is the validation error returned by
+// BatchDeleteRequest.Validate if the designated constraints aren't met.
+type BatchDeleteRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BatchDeleteRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BatchDeleteRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BatchDeleteRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BatchDeleteRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BatchDeleteRequestValidationError) ErrorName() string {
+	return "BatchDeleteRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BatchDeleteRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBatchDeleteRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BatchDeleteRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BatchDeleteRequestValidationError{}
+
+// Validate checks the field values on BatchDeleteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *BatchDeleteResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BatchDeleteResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// BatchDeleteResponseMultiError, or nil if none found.
+func (m *BatchDeleteResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BatchDeleteResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return BatchDeleteResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// BatchDeleteResponseMultiError is an error wrapping multiple validation
+// errors returned by BatchDeleteResponse.ValidateAll() if the designated
+// constraints aren't met.
+type BatchDeleteResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BatchDeleteResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BatchDeleteResponseMultiError) AllErrors() []error { return m }
+
+// BatchDeleteResponseValidationError is the validation error returned by
+// BatchDeleteResponse.Validate if the designated constraints aren't met.
+type BatchDeleteResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BatchDeleteResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BatchDeleteResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BatchDeleteResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BatchDeleteResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BatchDeleteResponseValidationError) ErrorName() string {
+	return "BatchDeleteResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e BatchDeleteResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBatchDeleteResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BatchDeleteResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BatchDeleteResponseValidationError{}
+
 // Validate checks the field values on UpdateFieldRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

@@ -50,6 +50,14 @@ service Article {
     };
   }
 
+  // 批量删除文章
+  rpc BatchDelete (BatchDeleteRequest) returns (BatchDeleteResponse) {
+    option (google.api.http) = {
+      post: "/article/batch_delete"
+      body: "*"
+    };
+  }
+
   // 强制删除文章
   rpc ForceDelete (DeleteRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -240,6 +248,14 @@ message UpdateResponse {
 
 message DeleteRequest {
   string id = 1;
+}
+
+message BatchDeleteRequest {
+  repeated string id = 1;
+}
+
+message BatchDeleteResponse {
+  repeated string id = 1;
 }
 
 message UpdateFieldRequest {
