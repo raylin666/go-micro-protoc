@@ -57,7 +57,8 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1BatchDeleteResponse"
+              "type": "object",
+              "properties": {}
             }
           },
           "default": {
@@ -869,17 +870,6 @@
       }
     },
     "v1BatchDeleteRequest": {
-      "type": "object",
-      "properties": {
-        "ids": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "v1BatchDeleteResponse": {
       "type": "object",
       "properties": {
         "ids": {

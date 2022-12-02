@@ -34,7 +34,7 @@ type ArticleClient interface {
 	// 删除文章
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 批量删除文章
-	BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*BatchDeleteResponse, error)
+	BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 强制删除文章
 	ForceDelete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// 更新文章字段属性
@@ -108,8 +108,8 @@ func (c *articleClient) Delete(ctx context.Context, in *DeleteRequest, opts ...g
 	return out, nil
 }
 
-func (c *articleClient) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*BatchDeleteResponse, error) {
-	out := new(BatchDeleteResponse)
+func (c *articleClient) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/article.v1.Article/BatchDelete", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -213,7 +213,7 @@ type ArticleServer interface {
 	// 删除文章
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	// 批量删除文章
-	BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error)
+	BatchDelete(context.Context, *BatchDeleteRequest) (*emptypb.Empty, error)
 	// 强制删除文章
 	ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	// 更新文章字段属性
@@ -254,7 +254,7 @@ func (UnimplementedArticleServer) Update(context.Context, *UpdateRequest) (*Upda
 func (UnimplementedArticleServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedArticleServer) BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error) {
+func (UnimplementedArticleServer) BatchDelete(context.Context, *BatchDeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchDelete not implemented")
 }
 func (UnimplementedArticleServer) ForceDelete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {

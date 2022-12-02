@@ -38,7 +38,7 @@ const OperationArticleUpdateField = "/article.v1.Article/UpdateField"
 
 type ArticleHTTPServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
-	BatchDelete(context.Context, *BatchDeleteRequest) (*BatchDeleteResponse, error)
+	BatchDelete(context.Context, *BatchDeleteRequest) (*emptypb.Empty, error)
 	CategoryAdd(context.Context, *CategoryAddRequest) (*CategoryAddResponse, error)
 	CategoryDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
 	CategoryForceDelete(context.Context, *CategoryDeleteRequest) (*emptypb.Empty, error)
@@ -191,7 +191,7 @@ func _Article_BatchDelete0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Con
 		if err != nil {
 			return err
 		}
-		reply := out.(*BatchDeleteResponse)
+		reply := out.(*emptypb.Empty)
 		return ctx.Result(200, reply)
 	}
 }
@@ -390,7 +390,7 @@ func _Article_CategoryUpdateField0_HTTP_Handler(srv ArticleHTTPServer) func(ctx 
 
 type ArticleHTTPClient interface {
 	Add(ctx context.Context, req *AddRequest, opts ...http.CallOption) (rsp *AddResponse, err error)
-	BatchDelete(ctx context.Context, req *BatchDeleteRequest, opts ...http.CallOption) (rsp *BatchDeleteResponse, err error)
+	BatchDelete(ctx context.Context, req *BatchDeleteRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	CategoryAdd(ctx context.Context, req *CategoryAddRequest, opts ...http.CallOption) (rsp *CategoryAddResponse, err error)
 	CategoryDelete(ctx context.Context, req *CategoryDeleteRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
 	CategoryForceDelete(ctx context.Context, req *CategoryDeleteRequest, opts ...http.CallOption) (rsp *emptypb.Empty, err error)
@@ -427,8 +427,8 @@ func (c *ArticleHTTPClientImpl) Add(ctx context.Context, in *AddRequest, opts ..
 	return &out, err
 }
 
-func (c *ArticleHTTPClientImpl) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...http.CallOption) (*BatchDeleteResponse, error) {
-	var out BatchDeleteResponse
+func (c *ArticleHTTPClientImpl) BatchDelete(ctx context.Context, in *BatchDeleteRequest, opts ...http.CallOption) (*emptypb.Empty, error) {
+	var out emptypb.Empty
 	pattern := "/article/batch_delete"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationArticleBatchDelete))

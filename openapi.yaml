@@ -86,10 +86,7 @@ paths:
             responses:
                 "200":
                     description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.BatchDeleteResponse'
+                    content: {}
     /article/category/add:
         put:
             tags:
@@ -593,13 +590,6 @@ components:
                     items:
                         $ref: '#/components/schemas/article.v1.ArticleCategory'
         article.v1.BatchDeleteRequest:
-            type: object
-            properties:
-                ids:
-                    type: array
-                    items:
-                        type: string
-        article.v1.BatchDeleteResponse:
             type: object
             properties:
                 ids:
