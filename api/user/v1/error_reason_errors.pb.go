@@ -220,3 +220,227 @@ func IsNotVisitAuth(err error) bool {
 func ErrorNotVisitAuth(format string, args ...interface{}) *errors.Error {
 	return errors.New(401, ErrorReason_NOT_VISIT_AUTH.String(), fmt.Sprintf(format, args...))
 }
+
+// 账号不存在
+func IsAccountNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ACCOUNT_NOT_FOUND.String() && e.Code == 404
+}
+
+// 账号不存在
+func ErrorAccountNotFound(format string, args ...interface{}) *errors.Error {
+	return errors.New(404, ErrorReason_ACCOUNT_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+}
+
+// 账号或密码错误
+func IsAccountOrPasswordError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String() && e.Code == 400
+}
+
+// 账号或密码错误
+func ErrorAccountOrPasswordError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ACCOUNT_OR_PASSWORD_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 账号登录失败
+func IsAccountLoginError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ACCOUNT_LOGIN_ERROR.String() && e.Code == 400
+}
+
+// 账号登录失败
+func ErrorAccountLoginError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ACCOUNT_LOGIN_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 账号已被停用, 请联系管理员
+func IsAccountFreezeError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ACCOUNT_FREEZE_ERROR.String() && e.Code == 400
+}
+
+// 账号已被停用, 请联系管理员
+func ErrorAccountFreezeError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ACCOUNT_FREEZE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 账号暂无权限，请联系管理员
+func IsAccountPermissionError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ACCOUNT_PERMISSION_ERROR.String() && e.Code == 401
+}
+
+// 账号暂无权限，请联系管理员
+func ErrorAccountPermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(401, ErrorReason_ACCOUNT_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 用户添加角色失败
+func IsAuthControlUserAddRoleError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 用户添加角色失败
+func ErrorAuthControlUserAddRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除用户角色失败
+func IsAuthControlDeleteUserRoleError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除用户角色失败
+func ErrorAuthControlDeleteUserRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除用户所有角色失败
+func IsAuthControlDeleteUserRolesError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除用户所有角色失败
+func ErrorAuthControlDeleteUserRolesError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ROLES_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 获取访问控制信息失败
+func IsAuthControlGetError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_GET_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 获取访问控制信息失败
+func ErrorAuthControlGetError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除用户失败
+func IsAuthControlDeleteUserError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除用户失败
+func ErrorAuthControlDeleteUserError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_USER_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除角色失败
+func IsAuthControlDeleteRoleError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除角色失败
+func ErrorAuthControlDeleteRoleError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_ROLE_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除权限失败
+func IsAuthControlDeletePermissionError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除权限失败
+func ErrorAuthControlDeletePermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 用户或角色添加权限失败
+func IsAuthControlUserAddPermissionError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 用户或角色添加权限失败
+func ErrorAuthControlUserAddPermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_ADD_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除用户或角色的权限失败
+func IsAuthControlUserDeletePermissionError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除用户或角色的权限失败
+func ErrorAuthControlUserDeletePermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 删除用户或角色的所有权限失败
+func IsAuthControlUserDeletePermissionsError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 删除用户或角色的所有权限失败
+func ErrorAuthControlUserDeletePermissionsError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_USER_DELETE_PERMISSIONS_ERROR.String(), fmt.Sprintf(format, args...))
+}
+
+// 访问控制 - 获取用户或角色的权限失败
+func IsAuthControlGetUserPermissionError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String() && e.Code == 400
+}
+
+// 访问控制 - 获取用户或角色的权限失败
+func ErrorAuthControlGetUserPermissionError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_AUTH_CONTROL_GET_USER_PERMISSION_ERROR.String(), fmt.Sprintf(format, args...))
+}
