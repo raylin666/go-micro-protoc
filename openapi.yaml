@@ -52,214 +52,6 @@ paths:
                 "200":
                     description: OK
                     content: {}
-    /article/add:
-        put:
-            tags:
-                - Article
-            description: 新增文章
-            operationId: Article_Add
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.AddRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.AddResponse'
-    /article/batch_delete:
-        post:
-            tags:
-                - Article
-            description: 批量删除文章
-            operationId: Article_BatchDelete
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.BatchDeleteRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/category/add:
-        put:
-            tags:
-                - Article
-            description: 新增文章分类
-            operationId: Article_CategoryAdd
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.CategoryAddRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.CategoryAddResponse'
-    /article/category/delete/{id}:
-        delete:
-            tags:
-                - Article
-            description: 删除文章分类
-            operationId: Article_CategoryDelete
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/category/force_delete/{id}:
-        delete:
-            tags:
-                - Article
-            description: 强制删除文章分类
-            operationId: Article_CategoryForceDelete
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/category/info/{id}:
-        get:
-            tags:
-                - Article
-            description: 文章分类详情
-            operationId: Article_CategoryInfo
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.CategoryInfoResponse'
-    /article/category/list:
-        get:
-            tags:
-                - Article
-            description: 文章分类列表
-            operationId: Article_CategoryList
-            parameters:
-                - name: status
-                  in: query
-                  schema:
-                    type: integer
-                    format: int32
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.CategoryListResponse'
-    /article/category/update/{id}:
-        post:
-            tags:
-                - Article
-            description: 更新文章分类
-            operationId: Article_CategoryUpdate
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.CategoryUpdateRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.CategoryUpdateResponse'
-    /article/category/update_field/{id}/{field}:
-        post:
-            tags:
-                - Article
-            description: 更新文章分类字段属性
-            operationId: Article_CategoryUpdateField
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-                - name: field
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.CategoryUpdateFieldRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/delete/{id}:
-        delete:
-            tags:
-                - Article
-            description: 删除文章
-            operationId: Article_Delete
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/force_delete/{id}:
-        delete:
-            tags:
-                - Article
-            description: 强制删除文章
-            operationId: Article_ForceDelete
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content: {}
     /article/info/{id}:
         get:
             tags:
@@ -303,58 +95,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/article.v1.ListResponse'
-    /article/update/{id}:
-        post:
-            tags:
-                - Article
-            description: 更新文章
-            operationId: Article_Update
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.UpdateRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/article.v1.UpdateResponse'
-    /article/update_field/{id}/{field}:
-        post:
-            tags:
-                - Article
-            description: 更新文章字段属性
-            operationId: Article_UpdateField
-            parameters:
-                - name: id
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-                - name: field
-                  in: path
-                  required: true
-                  schema:
-                    type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/article.v1.UpdateFieldRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content: {}
     /short_url/generate:
         post:
             tags:
@@ -452,95 +192,7 @@ paths:
                                 $ref: '#/components/schemas/basic.v1.GenerateUuidResponse'
 components:
     schemas:
-        article.v1.AddRequest:
-            type: object
-            properties:
-                title:
-                    type: string
-                author:
-                    type: string
-                summary:
-                    type: string
-                cover:
-                    type: string
-                sort:
-                    type: integer
-                    format: int32
-                recommendFlag:
-                    type: boolean
-                commentedFlag:
-                    type: boolean
-                status:
-                    type: integer
-                    format: int32
-                viewCount:
-                    type: integer
-                    format: int32
-                commentCount:
-                    type: integer
-                    format: int32
-                shareCount:
-                    type: integer
-                    format: int32
-                source:
-                    type: string
-                sourceUrl:
-                    type: string
-                content:
-                    type: string
-                keyword:
-                    type: array
-                    items:
-                        type: string
-                attachmentPath:
-                    type: array
-                    items:
-                        type: string
-                category:
-                    type: array
-                    items:
-                        type: string
-        article.v1.AddResponse:
-            type: object
-            properties:
-                id:
-                    type: string
-        article.v1.ArticleCategory:
-            type: object
-            properties:
-                id:
-                    type: string
-                pid:
-                    type: string
-                name:
-                    type: string
-                sort:
-                    type: integer
-                    format: int32
-        article.v1.ArticleCategoryList:
-            type: object
-            properties:
-                id:
-                    type: string
-                pid:
-                    type: string
-                name:
-                    type: string
-                sort:
-                    type: integer
-                    format: int32
-                status:
-                    type: integer
-                    format: int32
-                createdAt:
-                    type: integer
-                    format: uint32
-                updatedAt:
-                    type: integer
-                    format: uint32
-                articleCount:
-                    type: string
-        article.v1.ArticleList:
+        article.v1.ArticleListItem:
             type: object
             properties:
                 id:
@@ -553,133 +205,42 @@ components:
                     type: string
                 cover:
                     type: string
-                sort:
-                    type: integer
-                    format: int32
-                recommendFlag:
-                    type: boolean
-                commentedFlag:
-                    type: boolean
-                status:
-                    type: integer
-                    format: int32
+                time:
+                    type: string
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/article.v1.ArticleTagItem'
                 viewCount:
                     type: integer
                     format: int32
-                commentCount:
+                collectionCount:
                     type: integer
                     format: int32
                 shareCount:
                     type: integer
                     format: int32
-                publisherUsername:
-                    type: string
-                userId:
-                    type: string
-                lastCommentedAt:
-                    type: integer
-                    format: uint32
-                createdAt:
-                    type: integer
-                    format: uint32
-                updatedAt:
-                    type: integer
-                    format: uint32
-                category:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/article.v1.ArticleCategory'
-        article.v1.BatchDeleteRequest:
-            type: object
-            properties:
-                ids:
-                    type: array
-                    items:
-                        type: string
-        article.v1.CategoryAddRequest:
-            type: object
-            properties:
-                pid:
-                    type: integer
-                    format: int64
-                name:
-                    type: string
-                sort:
+                zanCount:
                     type: integer
                     format: int32
-                status:
+                commentCount:
                     type: integer
                     format: int32
-        article.v1.CategoryAddResponse:
+        article.v1.ArticleTagItem:
             type: object
             properties:
                 id:
-                    type: string
-        article.v1.CategoryInfoResponse:
-            type: object
-            properties:
-                id:
-                    type: string
-                pid:
                     type: string
                 name:
                     type: string
-                sort:
-                    type: integer
-                    format: int32
-                status:
-                    type: integer
-                    format: int32
-                createdAt:
-                    type: integer
-                    format: uint32
-                updatedAt:
-                    type: integer
-                    format: uint32
-                deletedAt:
+                color:
                     type: string
-                    format: date-time
-                articleCount:
-                    type: string
-        article.v1.CategoryListResponse:
-            type: object
-            properties:
-                list:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/article.v1.ArticleCategoryList'
-                count:
-                    type: integer
-                    format: int32
-        article.v1.CategoryUpdateFieldRequest:
+        article.v1.BasicIntroduceArticleItem:
             type: object
             properties:
                 id:
                     type: string
-                field:
-                    type: string
-                value:
-                    type: string
-        article.v1.CategoryUpdateRequest:
-            type: object
-            properties:
-                pid:
-                    type: integer
-                    format: int64
-                name:
-                    type: string
-                sort:
-                    type: integer
-                    format: int32
-                status:
-                    type: integer
-                    format: int32
-                id:
-                    type: string
-        article.v1.CategoryUpdateResponse:
-            type: object
-            properties:
-                id:
+                title:
                     type: string
         article.v1.InfoResponse:
             type: object
@@ -694,66 +255,52 @@ components:
                     type: string
                 cover:
                     type: string
-                sort:
-                    type: integer
-                    format: int32
-                recommendFlag:
-                    type: boolean
-                commentedFlag:
-                    type: boolean
-                status:
-                    type: integer
-                    format: int32
+                time:
+                    type: string
+                tags:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/article.v1.ArticleTagItem'
                 viewCount:
                     type: integer
                     format: int32
-                commentCount:
+                collectionCount:
                     type: integer
                     format: int32
                 shareCount:
                     type: integer
                     format: int32
-                publisherUsername:
-                    type: string
-                userId:
-                    type: string
-                lastCommentedAt:
+                zanCount:
                     type: integer
-                    format: uint32
-                createdAt:
+                    format: int32
+                commentCount:
                     type: integer
-                    format: uint32
-                updatedAt:
-                    type: integer
-                    format: uint32
-                deletedAt:
-                    type: string
-                    format: date-time
+                    format: int32
                 source:
                     type: string
                 sourceUrl:
                     type: string
                 content:
                     type: string
-                keyword:
-                    type: array
-                    items:
-                        type: string
-                attachmentPath:
-                    type: array
-                    items:
-                        type: string
-                category:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/article.v1.ArticleCategory'
+                prevArticle:
+                    $ref: '#/components/schemas/article.v1.BasicIntroduceArticleItem'
+                nextArticle:
+                    $ref: '#/components/schemas/article.v1.BasicIntroduceArticleItem'
+                copyrightAuthor:
+                    type: string
+                copyrightArticleId:
+                    type: string
+                copyrightLink:
+                    type: string
+                copyrightStatement:
+                    type: string
         article.v1.ListResponse:
             type: object
             properties:
                 list:
                     type: array
                     items:
-                        $ref: '#/components/schemas/article.v1.ArticleList'
+                        $ref: '#/components/schemas/article.v1.ArticleListItem'
                 count:
                     type: integer
                     format: int32
@@ -763,70 +310,6 @@ components:
                 size:
                     type: integer
                     format: int32
-        article.v1.UpdateFieldRequest:
-            type: object
-            properties:
-                id:
-                    type: string
-                field:
-                    type: string
-                value:
-                    type: string
-        article.v1.UpdateRequest:
-            type: object
-            properties:
-                title:
-                    type: string
-                author:
-                    type: string
-                summary:
-                    type: string
-                cover:
-                    type: string
-                sort:
-                    type: integer
-                    format: int32
-                recommendFlag:
-                    type: boolean
-                commentedFlag:
-                    type: boolean
-                status:
-                    type: integer
-                    format: int32
-                viewCount:
-                    type: integer
-                    format: int32
-                commentCount:
-                    type: integer
-                    format: int32
-                shareCount:
-                    type: integer
-                    format: int32
-                source:
-                    type: string
-                sourceUrl:
-                    type: string
-                content:
-                    type: string
-                keyword:
-                    type: array
-                    items:
-                        type: string
-                attachmentPath:
-                    type: array
-                    items:
-                        type: string
-                category:
-                    type: array
-                    items:
-                        type: string
-                id:
-                    type: string
-        article.v1.UpdateResponse:
-            type: object
-            properties:
-                id:
-                    type: string
         basic.v1.GenerateShortUrlRequest:
             type: object
             properties:

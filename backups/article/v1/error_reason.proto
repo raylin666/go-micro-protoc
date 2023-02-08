@@ -46,4 +46,7 @@ enum ErrorReason {
   NOT_LOGIN_ERROR = 203001 [(errors.code) = 401];
   // 没有访问权限
   NOT_VISIT_AUTH = 203002 [(errors.code) = 401];
+
+  // 请先删除分类下的所有文章
+  ARTICLE_IN_CATEGORY_ERROR = 204001 [(errors.code) = 400];
 }

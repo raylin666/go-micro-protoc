@@ -220,3 +220,17 @@ func IsNotVisitAuth(err error) bool {
 func ErrorNotVisitAuth(format string, args ...interface{}) *errors.Error {
 	return errors.New(401, ErrorReason_NOT_VISIT_AUTH.String(), fmt.Sprintf(format, args...))
 }
+
+// 请先删除分类下的所有文章
+func IsArticleInCategoryError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ErrorReason_ARTICLE_IN_CATEGORY_ERROR.String() && e.Code == 400
+}
+
+// 请先删除分类下的所有文章
+func ErrorArticleInCategoryError(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, ErrorReason_ARTICLE_IN_CATEGORY_ERROR.String(), fmt.Sprintf(format, args...))
+}
