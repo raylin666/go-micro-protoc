@@ -29,8 +29,8 @@ type ArticleHTTPServer interface {
 
 func RegisterArticleHTTPServer(s *http.Server, srv ArticleHTTPServer) {
 	r := s.Route("/")
-	r.GET("/article/list", _Article_List0_HTTP_Handler(srv))
-	r.GET("/article/info/{id}", _Article_Info0_HTTP_Handler(srv))
+	r.GET("/list", _Article_List0_HTTP_Handler(srv))
+	r.GET("/info/{id}", _Article_Info0_HTTP_Handler(srv))
 }
 
 func _Article_List0_HTTP_Handler(srv ArticleHTTPServer) func(ctx http.Context) error {
@@ -89,7 +89,7 @@ func NewArticleHTTPClient(client *http.Client) ArticleHTTPClient {
 
 func (c *ArticleHTTPClientImpl) Info(ctx context.Context, in *InfoRequest, opts ...http.CallOption) (*InfoResponse, error) {
 	var out InfoResponse
-	pattern := "/article/info/{id}"
+	pattern := "/info/{id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationArticleInfo))
 	opts = append(opts, http.PathTemplate(pattern))
@@ -102,7 +102,7 @@ func (c *ArticleHTTPClientImpl) Info(ctx context.Context, in *InfoRequest, opts 
 
 func (c *ArticleHTTPClientImpl) List(ctx context.Context, in *ListRequest, opts ...http.CallOption) (*ListResponse, error) {
 	var out ListResponse
-	pattern := "/article/list"
+	pattern := "/list"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationArticleList))
 	opts = append(opts, http.PathTemplate(pattern))

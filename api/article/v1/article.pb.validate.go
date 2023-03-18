@@ -323,13 +323,15 @@ func (m *ArticleListItem) validate(all bool) error {
 
 	// no validation rules for Author
 
+	// no validation rules for Avatar
+
 	// no validation rules for Summary
 
 	// no validation rules for Cover
 
 	// no validation rules for Time
 
-	for idx, item := range m.GetTags() {
+	for idx, item := range m.GetCategory() {
 		_, _ = idx, item
 
 		if all {
@@ -337,7 +339,7 @@ func (m *ArticleListItem) validate(all bool) error {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, ArticleListItemValidationError{
-						field:  fmt.Sprintf("Tags[%v]", idx),
+						field:  fmt.Sprintf("Category[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -345,7 +347,7 @@ func (m *ArticleListItem) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, ArticleListItemValidationError{
-						field:  fmt.Sprintf("Tags[%v]", idx),
+						field:  fmt.Sprintf("Category[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -354,7 +356,7 @@ func (m *ArticleListItem) validate(all bool) error {
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return ArticleListItemValidationError{
-					field:  fmt.Sprintf("Tags[%v]", idx),
+					field:  fmt.Sprintf("Category[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -580,13 +582,17 @@ func (m *InfoResponse) validate(all bool) error {
 
 	// no validation rules for Author
 
+	// no validation rules for Avatar
+
 	// no validation rules for Summary
 
 	// no validation rules for Cover
 
 	// no validation rules for Time
 
-	for idx, item := range m.GetTags() {
+	// no validation rules for Date
+
+	for idx, item := range m.GetCategory() {
 		_, _ = idx, item
 
 		if all {
@@ -594,7 +600,7 @@ func (m *InfoResponse) validate(all bool) error {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, InfoResponseValidationError{
-						field:  fmt.Sprintf("Tags[%v]", idx),
+						field:  fmt.Sprintf("Category[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -602,7 +608,7 @@ func (m *InfoResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, InfoResponseValidationError{
-						field:  fmt.Sprintf("Tags[%v]", idx),
+						field:  fmt.Sprintf("Category[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -611,7 +617,7 @@ func (m *InfoResponse) validate(all bool) error {
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return InfoResponseValidationError{
-					field:  fmt.Sprintf("Tags[%v]", idx),
+					field:  fmt.Sprintf("Category[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -779,22 +785,22 @@ var _ interface {
 	ErrorName() string
 } = InfoResponseValidationError{}
 
-// Validate checks the field values on ArticleTagItem with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *ArticleTagItem) Validate() error {
+// Validate checks the field values on ArticleCategoryItem with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ArticleCategoryItem) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ArticleTagItem with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ArticleTagItemMultiError,
-// or nil if none found.
-func (m *ArticleTagItem) ValidateAll() error {
+// ValidateAll checks the field values on ArticleCategoryItem with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ArticleCategoryItemMultiError, or nil if none found.
+func (m *ArticleCategoryItem) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ArticleTagItem) validate(all bool) error {
+func (m *ArticleCategoryItem) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -808,19 +814,19 @@ func (m *ArticleTagItem) validate(all bool) error {
 	// no validation rules for Color
 
 	if len(errors) > 0 {
-		return ArticleTagItemMultiError(errors)
+		return ArticleCategoryItemMultiError(errors)
 	}
 
 	return nil
 }
 
-// ArticleTagItemMultiError is an error wrapping multiple validation errors
-// returned by ArticleTagItem.ValidateAll() if the designated constraints
-// aren't met.
-type ArticleTagItemMultiError []error
+// ArticleCategoryItemMultiError is an error wrapping multiple validation
+// errors returned by ArticleCategoryItem.ValidateAll() if the designated
+// constraints aren't met.
+type ArticleCategoryItemMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ArticleTagItemMultiError) Error() string {
+func (m ArticleCategoryItemMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -829,11 +835,11 @@ func (m ArticleTagItemMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ArticleTagItemMultiError) AllErrors() []error { return m }
+func (m ArticleCategoryItemMultiError) AllErrors() []error { return m }
 
-// ArticleTagItemValidationError is the validation error returned by
-// ArticleTagItem.Validate if the designated constraints aren't met.
-type ArticleTagItemValidationError struct {
+// ArticleCategoryItemValidationError is the validation error returned by
+// ArticleCategoryItem.Validate if the designated constraints aren't met.
+type ArticleCategoryItemValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -841,22 +847,24 @@ type ArticleTagItemValidationError struct {
 }
 
 // Field function returns field value.
-func (e ArticleTagItemValidationError) Field() string { return e.field }
+func (e ArticleCategoryItemValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ArticleTagItemValidationError) Reason() string { return e.reason }
+func (e ArticleCategoryItemValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ArticleTagItemValidationError) Cause() error { return e.cause }
+func (e ArticleCategoryItemValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ArticleTagItemValidationError) Key() bool { return e.key }
+func (e ArticleCategoryItemValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ArticleTagItemValidationError) ErrorName() string { return "ArticleTagItemValidationError" }
+func (e ArticleCategoryItemValidationError) ErrorName() string {
+	return "ArticleCategoryItemValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e ArticleTagItemValidationError) Error() string {
+func (e ArticleCategoryItemValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -868,14 +876,14 @@ func (e ArticleTagItemValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sArticleTagItem.%s: %s%s",
+		"invalid %sArticleCategoryItem.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ArticleTagItemValidationError{}
+var _ error = ArticleCategoryItemValidationError{}
 
 var _ interface {
 	Field() string
@@ -883,7 +891,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ArticleTagItemValidationError{}
+} = ArticleCategoryItemValidationError{}
 
 // Validate checks the field values on BasicIntroduceArticleItem with the rules
 // defined in the proto definition for this message. If any rules are

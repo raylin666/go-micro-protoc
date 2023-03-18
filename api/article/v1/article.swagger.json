@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/article/info/{id}": {
+    "/info/{id}": {
       "get": {
         "summary": "文章详情",
         "operationId": "Article_Info",
@@ -47,7 +47,7 @@
         ]
       }
     },
-    "/article/list": {
+    "/list": {
       "get": {
         "summary": "文章列表",
         "operationId": "Article_List",
@@ -115,6 +115,20 @@
         }
       }
     },
+    "v1ArticleCategoryItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        }
+      }
+    },
     "v1ArticleListItem": {
       "type": "object",
       "properties": {
@@ -127,6 +141,9 @@
         "author": {
           "type": "string"
         },
+        "avatar": {
+          "type": "string"
+        },
         "summary": {
           "type": "string"
         },
@@ -136,10 +153,10 @@
         "time": {
           "type": "string"
         },
-        "tags": {
+        "category": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1ArticleTagItem"
+            "$ref": "#/definitions/v1ArticleCategoryItem"
           }
         },
         "viewCount": {
@@ -161,20 +178,6 @@
         "commentCount": {
           "type": "integer",
           "format": "int32"
-        }
-      }
-    },
-    "v1ArticleTagItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "color": {
-          "type": "string"
         }
       }
     },
@@ -201,6 +204,9 @@
         "author": {
           "type": "string"
         },
+        "avatar": {
+          "type": "string"
+        },
         "summary": {
           "type": "string"
         },
@@ -210,10 +216,13 @@
         "time": {
           "type": "string"
         },
-        "tags": {
+        "date": {
+          "type": "string"
+        },
+        "category": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1ArticleTagItem"
+            "$ref": "#/definitions/v1ArticleCategoryItem"
           }
         },
         "viewCount": {
@@ -275,8 +284,8 @@
           }
         },
         "count": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "page": {
           "type": "integer",

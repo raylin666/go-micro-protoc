@@ -3,56 +3,11 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: Article API
+    description: 文章服务
     version: 0.0.1
 paths:
-    /account/info:
-        get:
-            tags:
-                - Account
-            description: 获取账号信息
-            operationId: Account_GetInfo
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/user.v1.GetInfoResponse'
-    /account/login:
-        post:
-            tags:
-                - Account
-            description: 账号登录
-            operationId: Account_Login
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/user.v1.LoginRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/user.v1.LoginResponse'
-    /account/logout:
-        post:
-            tags:
-                - Account
-            description: 账号登出
-            operationId: Account_Logout
-            requestBody:
-                content:
-                    application/json: {}
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content: {}
-    /article/info/{id}:
+    /info/{id}:
         get:
             tags:
                 - Article
@@ -71,7 +26,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/article.v1.InfoResponse'
-    /article/list:
+    /list:
         get:
             tags:
                 - Article
@@ -95,103 +50,17 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/article.v1.ListResponse'
-    /short_url/generate:
-        post:
-            tags:
-                - ShortLink
-            description: 生成短链接
-            operationId: ShortLink_GenerateShortUrl
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/basic.v1.GenerateShortUrlRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/basic.v1.GenerateShortUrlResponse'
-    /short_url/transform_long_url:
-        post:
-            tags:
-                - ShortLink
-            description: 短链接拉取长链接
-            operationId: ShortLink_TransformLongUrl
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/basic.v1.TransformLongUrlRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/basic.v1.TransformLongUrlResponse'
-    /upload/file/stream:
-        put:
-            tags:
-                - Upload
-            description: 数据流方式上传文件
-            operationId: Upload_StreamUploadFile
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/basic.v1.StreamUploadFileRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/basic.v1.StreamUploadFileResponse'
-    /upload/file/url:
-        post:
-            tags:
-                - Upload
-            description: 通过URL资源地址方式上传文件
-            operationId: Upload_UrlUploadFile
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/basic.v1.UrlUploadFileRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/basic.v1.UrlUploadFileResponse'
-    /uuid/generate:
-        post:
-            tags:
-                - Uuid
-            description: 生成唯一标识
-            operationId: Uuid_Generate
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/basic.v1.GenerateUuidRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/basic.v1.GenerateUuidResponse'
 components:
     schemas:
+        article.v1.ArticleCategoryItem:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                color:
+                    type: string
         article.v1.ArticleListItem:
             type: object
             properties:
@@ -201,16 +70,18 @@ components:
                     type: string
                 author:
                     type: string
+                avatar:
+                    type: string
                 summary:
                     type: string
                 cover:
                     type: string
                 time:
                     type: string
-                tags:
+                category:
                     type: array
                     items:
-                        $ref: '#/components/schemas/article.v1.ArticleTagItem'
+                        $ref: '#/components/schemas/article.v1.ArticleCategoryItem'
                 viewCount:
                     type: integer
                     format: int32
@@ -226,15 +97,6 @@ components:
                 commentCount:
                     type: integer
                     format: int32
-        article.v1.ArticleTagItem:
-            type: object
-            properties:
-                id:
-                    type: string
-                name:
-                    type: string
-                color:
-                    type: string
         article.v1.BasicIntroduceArticleItem:
             type: object
             properties:
@@ -251,16 +113,20 @@ components:
                     type: string
                 author:
                     type: string
+                avatar:
+                    type: string
                 summary:
                     type: string
                 cover:
                     type: string
                 time:
                     type: string
-                tags:
+                date:
+                    type: string
+                category:
                     type: array
                     items:
-                        $ref: '#/components/schemas/article.v1.ArticleTagItem'
+                        $ref: '#/components/schemas/article.v1.ArticleCategoryItem'
                 viewCount:
                     type: integer
                     format: int32
@@ -303,158 +169,12 @@ components:
                         $ref: '#/components/schemas/article.v1.ArticleListItem'
                 count:
                     type: integer
-                    format: int32
+                    format: int64
                 page:
                     type: integer
                     format: int32
                 size:
                     type: integer
                     format: int32
-        basic.v1.GenerateShortUrlRequest:
-            type: object
-            properties:
-                url:
-                    type: string
-        basic.v1.GenerateShortUrlResponse:
-            type: object
-            properties:
-                url:
-                    type: string
-        basic.v1.GenerateUuidRequest:
-            type: object
-            properties:
-                type:
-                    type: string
-                    description: '*default: 随机UUIDtime_rand: 时间随机值'
-        basic.v1.GenerateUuidResponse:
-            type: object
-            properties:
-                value:
-                    type: string
-        basic.v1.StreamUploadFileRequest:
-            type: object
-            properties:
-                stream:
-                    type: string
-                    format: bytes
-                mimeType:
-                    type: string
-        basic.v1.StreamUploadFileResponse:
-            type: object
-            properties:
-                hash:
-                    type: string
-                uuid:
-                    type: string
-                key:
-                    type: string
-                fsize:
-                    type: integer
-                    format: int64
-                url:
-                    type: string
-                name:
-                    type: string
-                bucket:
-                    type: string
-                mimeType:
-                    type: string
-                ext:
-                    type: string
-        basic.v1.TransformLongUrlRequest:
-            type: object
-            properties:
-                url:
-                    type: string
-        basic.v1.TransformLongUrlResponse:
-            type: object
-            properties:
-                url:
-                    type: string
-        basic.v1.UrlUploadFileRequest:
-            type: object
-            properties:
-                url:
-                    type: string
-        basic.v1.UrlUploadFileResponse:
-            type: object
-            properties:
-                hash:
-                    type: string
-                key:
-                    type: string
-                fsize:
-                    type: integer
-                    format: int64
-                url:
-                    type: string
-                mimeType:
-                    type: string
-        user.v1.GetInfoResponse:
-            type: object
-            properties:
-                id:
-                    type: string
-                username:
-                    type: string
-                realUsername:
-                    type: string
-                sex:
-                    type: integer
-                    format: int32
-                birthdayAt:
-                    type: integer
-                    format: uint32
-                avatar:
-                    type: string
-                phoneArea:
-                    type: string
-                phone:
-                    type: string
-                email:
-                    type: string
-                lastLoginIp:
-                    type: string
-                status:
-                    type: integer
-                    format: int32
-                firstLoginAt:
-                    type: integer
-                    format: uint32
-                lastLoginAt:
-                    type: integer
-                    format: uint32
-                createdAt:
-                    type: integer
-                    format: uint32
-                updatedAt:
-                    type: integer
-                    format: uint32
-        user.v1.LoginRequest:
-            type: object
-            properties:
-                username:
-                    type: string
-                password:
-                    type: string
-        user.v1.LoginResponse:
-            type: object
-            properties:
-                id:
-                    type: string
-                token:
-                    type: string
-                expireAt:
-                    type: integer
-                    format: uint32
 tags:
-    - name: Account
-      description: 账号服务
     - name: Article
-      description: 文章服务
-    - name: ShortLink
-      description: 短链接服务
-    - name: Upload
-      description: 上传服务
-    - name: Uuid
-      description: 唯一标识服务

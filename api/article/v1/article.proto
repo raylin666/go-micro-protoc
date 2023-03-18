@@ -14,14 +14,14 @@ service Article {
   // 文章列表
   rpc List (ListRequest) returns (ListResponse) {
     option (google.api.http) = {
-      get: "/article/list"
+      get: "/list"
     };
   }
 
   // 文章详情
   rpc Info (InfoRequest) returns (InfoResponse) {
     option (google.api.http) = {
-      get: "/article/info/{id}"
+      get: "/info/{id}"
     };
   }
 }
@@ -33,7 +33,7 @@ message ListRequest {
 
 message ListResponse {
   repeated ArticleListItem list = 1;
-  int32 count = 2;
+  int64 count = 2;
   int32 page = 3;
   int32 size = 4;
 }
@@ -42,15 +42,16 @@ message ArticleListItem {
   string id = 1;
   string title = 2;
   string author  = 3;
-  string summary = 4;
-  string cover = 5;
-  string time = 6;
-  repeated ArticleTagItem tags = 7;
-  int32 viewCount = 8;
-  int32 collectionCount = 9;
-  int32 shareCount = 10;
-  int32 zanCount = 11;
-  int32 commentCount = 12;
+  string avatar = 4;
+  string summary = 5;
+  string cover = 6;
+  string time = 7;
+  repeated ArticleCategoryItem category = 8;
+  int32 viewCount = 9;
+  int32 collectionCount = 10;
+  int32 shareCount = 11;
+  int32 zanCount = 12;
+  int32 commentCount = 13;
 }
 
 message InfoRequest {
@@ -61,27 +62,29 @@ message InfoResponse {
   string id = 1;
   string title = 2;
   string author  = 3;
-  string summary = 4;
-  string cover = 5;
-  string time = 6;
-  repeated ArticleTagItem tags = 7;
-  int32 viewCount = 8;
-  int32 collectionCount = 9;
-  int32 shareCount = 10;
-  int32 zanCount = 11;
-  int32 commentCount = 12;
-  string source = 13;
-  string sourceUrl = 14;
-  string content = 15;
-  BasicIntroduceArticleItem prevArticle = 16;
-  BasicIntroduceArticleItem nextArticle = 17;
-  string copyrightAuthor = 18;
-  string copyrightArticleId = 19;
-  string copyrightLink = 20;
-  string copyrightStatement = 21;
+  string avatar = 4;
+  string summary = 5;
+  string cover = 6;
+  string time = 7;
+  string date = 8;
+  repeated ArticleCategoryItem category = 9;
+  int32 viewCount = 10;
+  int32 collectionCount = 11;
+  int32 shareCount = 12;
+  int32 zanCount = 13;
+  int32 commentCount = 14;
+  string source = 15;
+  string sourceUrl = 16;
+  string content = 17;
+  BasicIntroduceArticleItem prevArticle = 18;
+  BasicIntroduceArticleItem nextArticle = 19;
+  string copyrightAuthor = 20;
+  string copyrightArticleId = 21;
+  string copyrightLink = 22;
+  string copyrightStatement = 23;
 }
 
-message ArticleTagItem {
+message ArticleCategoryItem {
   string id = 1;
   string name = 2;
   string color = 3;
